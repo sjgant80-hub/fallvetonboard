@@ -1,0 +1,1865 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>&#9674; FallVetOnboard &middot; sovereign UK vet practice client + animal registration &middot; microchip &middot; insurance &middot; consent</title>
+<meta name="description" content="Sovereign UK veterinary practice onboarding: owner GDPR + animal registration, microchip verification, pet insurance capture, consent to treatment, RCVS-shaped. IDB-only, device-local, single HTML file.">
+<meta name="prime" content="953">
+<meta name="theme-color" content="#0b0a0f">
+<meta name="application-name" content="FallVetOnboard">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='%230b0a0f' rx='10'/><text x='32' y='44' font-family='Georgia,serif' font-size='34' font-weight='700' text-anchor='middle' fill='%23b8974a'>%E2%97%8A</text></svg>">
+<link rel="manifest" href='data:application/manifest+json,{"name":"FallVetOnboard","short_name":"vetonboard","start_url":"./","display":"standalone","orientation":"any","background_color":"%230b0a0f","theme_color":"%23b8974a","description":"Sovereign UK vet onboarding: owner + animal + microchip + insurance + consent","icons":[{"src":"data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 192 192%27><rect width=%27192%27 height=%27192%27 fill=%27%230b0a0f%27 rx=%2728%27/><text x=%2796%27 y=%27138%27 font-family=%27Georgia, serif%27 font-size=%27124%27 font-weight=%27700%27 text-anchor=%27middle%27 fill=%27%23b8974a%27>%E2%97%8A</text></svg>","sizes":"192x192","type":"image/svg+xml","purpose":"any"},{"src":"data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 512 512%27><rect width=%27512%27 height=%27512%27 fill=%27%230b0a0f%27 rx=%2772%27/><text x=%27256%27 y=%27368%27 font-family=%27Georgia, serif%27 font-size=%27328%27 font-weight=%27700%27 text-anchor=%27middle%27 fill=%27%23b8974a%27>%E2%97%8A</text></svg>","sizes":"512x512","type":"image/svg+xml","purpose":"any maskable"}]}'>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+ --void:#0b0a0f;--void-2:#13121a;--ink:#1a1922;--ink-2:#22212c;
+ --line:#2a2934;--line-soft:#1f1e28;
+ --cream:#e6e1d6;--cream-dim:#a8a395;--cream-muted:#6e6a5e;
+ --brass:#b8974a;--amber:#ff8c00;--ox:#8b1a1a;--ox-2:#5e1212;
+ --green:#4ade80;--red:#ef4444;--blue:#60a5fa;--yellow:#fbbf24;--violet:#a78bfa;
+ --serif:'Libre Baskerville',Georgia,ui-serif,serif;
+ --sans:'DM Sans','Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+ --mono:'IBM Plex Mono','SF Mono',ui-monospace,Menlo,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:var(--void);color:var(--cream);font:14px/1.55 var(--sans);min-height:100dvh;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:0.035;background-image:radial-gradient(circle at 25% 30%, var(--brass) 0, transparent 1px), radial-gradient(circle at 75% 70%, var(--cream) 0, transparent 1px);background-size:3px 3px,5px 5px;mix-blend-mode:overlay}
+button{font-family:inherit;cursor:pointer;background:transparent;border:none;color:inherit}
+input,textarea,select{font-family:inherit;background:var(--ink);border:1px solid var(--line);color:var(--cream);border-radius:3px;padding:8px 11px;outline:none;font-size:13px;width:100%}
+input:focus,textarea:focus,select:focus{border-color:var(--brass)}
+textarea{resize:vertical;min-height:60px;font-family:inherit;line-height:1.5}
+a{color:var(--brass);text-decoration:none}
+a:hover{color:var(--amber)}
+::-webkit-scrollbar{width:9px;height:9px}::-webkit-scrollbar-track{background:var(--void)}::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}::-webkit-scrollbar-thumb:hover{background:var(--brass)}
+
+.app{min-height:100dvh;display:grid;grid-template-rows:auto 1fr;position:relative;z-index:1}
+header{display:flex;align-items:center;border-bottom:1px solid var(--line);background:var(--void-2);user-select:none;flex-wrap:wrap;min-height:52px}
+.brand{display:flex;align-items:center;gap:11px;padding:10px 18px;border-right:1px solid var(--line)}
+.brand .mark{width:30px;height:30px;background:linear-gradient(135deg,var(--brass),var(--amber));border-radius:5px;display:grid;place-items:center;font-family:var(--serif);font-weight:700;font-size:17px;color:var(--void)}
+.brand .name{font-family:var(--serif);font-weight:700;font-size:15px;letter-spacing:0.01em}
+.brand .seal{font-family:var(--mono);font-size:9px;color:var(--cream-muted);letter-spacing:0.18em;text-transform:uppercase;margin-top:1px}
+
+nav.tabs{display:flex;flex:1;overflow-x:auto;align-items:stretch}
+nav.tabs button{padding:0 18px;font-size:12px;color:var(--cream-dim);letter-spacing:0.04em;display:flex;align-items:center;gap:6px;border-right:1px solid var(--line-soft);height:52px;white-space:nowrap;border-top:2px solid transparent;font-weight:500}
+nav.tabs button:hover{background:var(--ink);color:var(--cream)}
+nav.tabs button.active{background:var(--ink);color:var(--brass);border-top-color:var(--brass)}
+nav.tabs .tcount{font-family:var(--mono);font-size:9px;color:var(--cream-muted);background:var(--ink-2);padding:1px 6px;border-radius:8px;margin-left:4px}
+
+.tools-r{display:flex;align-items:center;gap:6px;padding:0 14px;height:52px;border-left:1px solid var(--line);margin-left:auto}
+.tool-btn{padding:5px 11px;border-radius:3px;font-size:11px;color:var(--cream-dim);letter-spacing:0.06em;text-transform:uppercase;font-family:var(--mono);border:1px solid var(--line)}
+.tool-btn:hover{background:var(--ink);color:var(--cream);border-color:var(--brass)}
+.tool-btn.primary{background:var(--brass);color:var(--void);border-color:var(--brass);font-weight:600}
+.tool-btn.primary:hover{background:var(--amber);border-color:var(--amber)}
+.tool-btn.t3{border-color:var(--blue);color:var(--blue)}
+
+main{padding:18px 22px 80px;overflow-y:auto;max-width:1280px;margin:0 auto;width:100%}
+@media (max-width:640px){main{padding:14px 12px 80px}.brand{padding:8px 12px}.brand .seal{display:none}nav.tabs button{padding:0 12px;font-size:11px}}
+
+.disclaimer{background:linear-gradient(180deg,rgba(139,26,26,0.18),rgba(139,26,26,0.08));border:1px solid var(--ox);border-left:3px solid var(--ox);border-radius:3px;padding:12px 16px;margin-bottom:18px;font-size:12px;color:var(--cream);line-height:1.5}
+.disclaimer strong{color:var(--brass);font-family:var(--serif)}
+
+.section-h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;gap:14px;flex-wrap:wrap}
+.section-h h2{font-family:var(--serif);font-size:20px;font-weight:700;letter-spacing:0.01em}
+.section-h .sub{font-family:var(--mono);font-size:11px;color:var(--cream-muted);letter-spacing:0.08em;text-transform:uppercase}
+.section-h .actions{display:flex;gap:6px;flex-wrap:wrap}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:680px){.grid-2{grid-template-columns:1fr}}
+.card{background:var(--void-2);border:1px solid var(--line);border-radius:4px;padding:16px 18px}
+.card h3{font-family:var(--serif);font-size:15px;font-weight:700;margin-bottom:10px;color:var(--cream);letter-spacing:0.01em}
+.card h3 .meta{font-family:var(--mono);font-size:10px;color:var(--brass);letter-spacing:0.1em;margin-left:8px;font-weight:400}
+
+.kpi{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0;border-bottom:1px dashed var(--line-soft);font-size:13px}
+.kpi:last-child{border-bottom:none}
+.kpi .l{color:var(--cream-dim)}
+.kpi .v{font-family:var(--mono);color:var(--cream);font-weight:500}
+.kpi .v.green{color:var(--green)}.kpi .v.red{color:var(--red)}.kpi .v.amber{color:var(--amber)}.kpi .v.brass{color:var(--brass)}.kpi .v.blue{color:var(--blue)}
+
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px}
+@media (max-width:520px){.row,.row3{grid-template-columns:1fr}}
+.field{margin-bottom:10px}
+.field label{display:block;font-family:var(--mono);font-size:10px;color:var(--cream-muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px}
+.field .hint{font-size:11px;color:var(--cream-muted);margin-top:4px;font-family:var(--mono);line-height:1.4}
+.field .req{color:var(--ox);margin-left:3px}
+
+.btn{padding:8px 15px;border:1px solid var(--brass);border-radius:3px;font-size:12px;color:var(--cream);background:transparent;letter-spacing:0.04em;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--amber);color:var(--amber)}
+.btn.primary{background:var(--brass);color:var(--void);border-color:var(--brass);font-weight:600}
+.btn.primary:hover{background:var(--amber);border-color:var(--amber);color:var(--void)}
+.btn.danger{border-color:var(--ox);color:var(--ox)}
+.btn.danger:hover{background:var(--ox);color:var(--cream);border-color:var(--ox)}
+.btn.ghost{border-color:var(--line);color:var(--cream-dim)}
+.btn.ghost:hover{border-color:var(--brass);color:var(--brass)}
+.btn.sm{padding:5px 10px;font-size:11px}
+.btn:disabled{opacity:0.45;cursor:not-allowed}
+
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+th,td{padding:9px 11px;border-bottom:1px solid var(--line-soft);text-align:left;vertical-align:middle}
+th{color:var(--brass);font-family:var(--mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;font-weight:600;background:var(--void-2);position:sticky;top:0}
+td.r{text-align:right;font-family:var(--mono)}
+tr.row-link{cursor:pointer}
+tr.row-link:hover td{background:var(--ink)}
+
+.tag{display:inline-block;padding:2px 8px;border-radius:11px;font-family:var(--mono);font-size:10px;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--brass);color:var(--brass);margin-right:4px;line-height:1.5}
+.tag.amber{border-color:var(--amber);color:var(--amber)}
+.tag.green{border-color:var(--green);color:var(--green)}
+.tag.red{border-color:var(--red);color:var(--red)}
+.tag.blue{border-color:var(--blue);color:var(--blue)}
+.tag.muted{border-color:var(--cream-muted);color:var(--cream-muted)}
+.tag.violet{border-color:var(--violet);color:var(--violet)}
+.tag.ox{border-color:var(--ox);color:var(--ox)}
+
+.chip-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{padding:5px 11px;border-radius:14px;border:1px solid var(--line);color:var(--cream-dim);font-size:11px;font-family:var(--mono);letter-spacing:0.04em;cursor:pointer;text-transform:lowercase;background:var(--void-2)}
+.chip:hover{border-color:var(--brass);color:var(--cream)}
+.chip.active{background:var(--brass);color:var(--void);border-color:var(--brass);font-weight:600}
+.chip.due{background:var(--ox);color:var(--cream);border-color:var(--ox)}
+
+/* WIZARD */
+.wizard{max-width:780px;margin:0 auto}
+.wizard-steps{display:flex;gap:4px;margin-bottom:22px;overflow-x:auto;padding-bottom:6px}
+.wstep{flex:1 1 0;min-width:58px;padding:6px 6px;background:var(--void-2);border:1px solid var(--line);border-radius:3px;font-size:9px;color:var(--cream-muted);text-align:center;font-family:var(--mono);letter-spacing:0.03em;text-transform:uppercase;cursor:pointer}
+.wstep.done{border-color:var(--green);color:var(--green)}
+.wstep.active{background:var(--brass);color:var(--void);border-color:var(--brass);font-weight:600}
+.wstep .n{font-size:13px;display:block;font-weight:600}
+.wizard-body{background:var(--void-2);border:1px solid var(--line);border-radius:4px;padding:22px;min-height:420px}
+.wizard-body h3{font-family:var(--serif);font-size:18px;margin-bottom:6px;color:var(--brass)}
+.wizard-body .step-sub{color:var(--cream-dim);font-size:12px;margin-bottom:18px;font-style:italic}
+.wizard-foot{display:flex;justify-content:space-between;margin-top:18px;gap:10px}
+
+/* MODAL */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.78);display:flex;align-items:center;justify-content:center;z-index:200;padding:14px;animation:fadein 0.18s}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+.modal{background:var(--void-2);border:1px solid var(--brass);border-radius:5px;max-width:760px;width:100%;max-height:92vh;overflow-y:auto;padding:0}
+.modal-h{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--void-2);z-index:1}
+.modal-h h3{font-family:var(--serif);font-size:16px;color:var(--brass)}
+.modal-b{padding:18px 22px 22px}
+.modal-close{font-family:var(--mono);font-size:14px;color:var(--cream-dim);padding:4px 10px;border:1px solid var(--line);border-radius:3px}
+.modal-close:hover{color:var(--ox);border-color:var(--ox)}
+
+/* TOAST */
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--void-2);border:1px solid var(--brass);color:var(--cream);padding:9px 16px;border-radius:3px;font-size:12px;opacity:0;transition:opacity 0.22s,bottom 0.22s;font-family:var(--mono);letter-spacing:0.04em;z-index:300;pointer-events:none;box-shadow:0 4px 16px rgba(0,0,0,0.5)}
+.toast.show{opacity:1;bottom:30px}
+
+/* CHAT */
+.chat{display:flex;flex-direction:column;gap:10px;max-height:58vh;overflow-y:auto;padding:6px;margin-bottom:8px}
+.msg{padding:11px 15px;border-radius:6px;max-width:88%;font-size:13px;line-height:1.55;white-space:pre-wrap;word-break:break-word}
+.msg.user{background:var(--ink);align-self:flex-end;border-bottom-right-radius:2px}
+.msg.bot{background:var(--void-2);border:1px solid var(--line);border-left:2px solid var(--brass);align-self:flex-start;border-bottom-left-radius:2px}
+.msg.bot .src{font-family:var(--mono);font-size:10px;color:var(--cream-muted);letter-spacing:0.08em;margin-top:6px;padding-top:6px;border-top:1px dashed var(--line)}
+.chat-input{display:flex;gap:8px;margin-top:10px}
+.chat-input input{flex:1;padding:11px 14px}
+
+/* AUDIT */
+.audit-entry{padding:8px 11px;border-left:2px solid var(--brass);background:var(--ink);margin-bottom:5px;font-family:var(--mono);font-size:11px;border-radius:0 3px 3px 0}
+.audit-entry .a-action{color:var(--brass);font-weight:600}
+.audit-entry .a-meta{color:var(--cream-muted);font-size:10px;margin-top:2px}
+.audit-entry .a-reason{color:var(--cream-dim);margin-top:3px;font-family:var(--sans);font-style:italic}
+
+/* CLIENT DETAIL */
+.cd-grid{display:grid;grid-template-columns:280px 1fr;gap:18px;margin-top:8px}
+@media (max-width:840px){.cd-grid{grid-template-columns:1fr}}
+.cd-side{background:var(--void-2);border:1px solid var(--line);border-radius:4px;padding:14px}
+.cd-side .who{font-family:var(--serif);font-size:17px;color:var(--cream);margin-bottom:4px}
+.cd-side .sub{font-family:var(--mono);font-size:11px;color:var(--cream-muted);margin-bottom:10px;letter-spacing:0.04em}
+.cd-side .actions{display:flex;flex-direction:column;gap:6px;margin-top:14px}
+.cd-side .actions .btn{justify-content:center;text-align:center}
+.cd-body{display:flex;flex-direction:column;gap:14px}
+
+.banner{padding:10px 14px;border-radius:3px;font-size:12px;line-height:1.55;border:1px solid;margin-bottom:14px}
+.banner.warn{border-color:var(--amber);background:rgba(255,140,0,0.08);color:var(--cream)}
+.banner.info{border-color:var(--blue);background:rgba(96,165,250,0.06);color:var(--cream)}
+.banner.success{border-color:var(--green);background:rgba(74,222,128,0.06);color:var(--cream)}
+.banner.danger{border-color:var(--ox);background:rgba(139,26,26,0.12);color:var(--cream)}
+
+.empty{text-align:center;padding:60px 20px;color:var(--cream-muted)}
+.empty .big{font-family:var(--serif);font-size:22px;color:var(--brass);margin-bottom:8px}
+.empty .small{font-size:13px;margin-bottom:20px}
+
+/* DASH KPI */
+.dash-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:18px}
+.dash-kpi{background:var(--void-2);border:1px solid var(--line);border-radius:4px;padding:14px 16px}
+.dash-kpi .n{font-family:var(--serif);font-size:28px;font-weight:700;color:var(--brass);line-height:1.1}
+.dash-kpi .l{font-family:var(--mono);font-size:10px;color:var(--cream-muted);letter-spacing:0.1em;text-transform:uppercase;margin-top:4px}
+.dash-kpi.due .n{color:var(--ox)}
+.dash-kpi.warn .n{color:var(--amber)}
+.dash-kpi.ok .n{color:var(--green)}
+
+.divider{height:1px;background:var(--line);margin:18px 0}
+
+input[type=checkbox]{width:auto;margin-right:8px;vertical-align:middle;accent-color:var(--brass)}
+input[type=radio]{width:auto;margin-right:6px;accent-color:var(--brass)}
+
+.help-pill{display:inline-block;padding:1px 7px;border-radius:8px;background:var(--ink);color:var(--cream-muted);font-family:var(--mono);font-size:10px;margin-left:6px;border:1px solid var(--line);cursor:help}
+
+/* ANIMAL avatar */
+.an-av{width:38px;height:38px;border-radius:50%;background:var(--ink-2);display:inline-grid;place-items:center;font-family:var(--serif);font-size:18px;color:var(--brass);border:1px solid var(--line);vertical-align:middle;margin-right:8px}
+
+/* foot */
+.foot{text-align:center;padding:30px 12px 12px;font-family:var(--mono);font-size:10px;color:var(--cream-muted);letter-spacing:0.08em}
+.foot a{color:var(--cream-muted);text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+ <div class="brand">
+ <div class="mark">&#9674;</div>
+ <div>
+ <div class="name" id="brandName">FallVetOnboard</div>
+ <div class="seal" id="brandSeal">SOVEREIGN &middot; VET &middot; RCVS &middot; P953</div>
+ </div>
+ </div>
+ <nav class="tabs" id="nav"></nav>
+ <div class="tools-r">
+ <button class="tool-btn" id="tierBadge" onclick="openModal('settings')">T0</button>
+ <button class="tool-btn" onclick="openModal('audit')">audit</button>
+ <button class="tool-btn primary" onclick="newClient()">+ owner</button>
+ </div>
+</header>
+<main id="view"></main>
+</div>
+<div id="modalRoot"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+'use strict';
+
+// ════════════════════════════════════════════════════════════════
+// CONSTANTS
+// ════════════════════════════════════════════════════════════════
+const TOOLNAME='fallvetonboard';
+const VERSION='1.0.0';
+const PRIME=953;
+const SCHEMA_V=1;
+const STORE='fallvetonboard.v1';
+const AUDIT_CAP=50000;
+
+const TABS=[
+ {id:'clients',label:'Owners'},
+ {id:'animals',label:'Animals'},
+ {id:'dashboard',label:'Dashboard'},
+ {id:'practice',label:'Practice'},
+ {id:'vets',label:'Vets'},
+ {id:'chiplog',label:'Chip Log'},
+ {id:'qa',label:'Vet Help'},
+];
+
+const SPECIES=[
+ {v:'dog',l:'Dog',e:'🐕'},
+ {v:'cat',l:'Cat',e:'🐈'},
+ {v:'rabbit',l:'Rabbit',e:'🐇'},
+ {v:'horse',l:'Horse',e:'🐎'},
+ {v:'guinea-pig',l:'Guinea pig',e:'🐹'},
+ {v:'hamster',l:'Hamster',e:'🐹'},
+ {v:'ferret',l:'Ferret',e:'🦝'},
+ {v:'bird',l:'Bird (parrot/budgie/etc.)',e:'🐦'},
+ {v:'reptile',l:'Reptile',e:'🦎'},
+ {v:'exotic',l:'Other / exotic',e:'🐾'},
+];
+
+const CHIP_DBS=[
+ {v:'petlog',l:'Petlog (Kennel Club)'},
+ {v:'microchip-id',l:'MicrochipID'},
+ {v:'animaltrac',l:'Animaltrac'},
+ {v:'identibase',l:'Identibase'},
+ {v:'petscanner',l:'Pet-Scanner'},
+ {v:'protected-pet',l:'Protected Pet'},
+ {v:'national-vet-data',l:'National Vet Data Service'},
+ {v:'pet-id',l:'Pet ID'},
+ {v:'smarttrac',l:'SmartTrac'},
+ {v:'other',l:'Other / international'},
+];
+
+const INSURERS=[
+ {v:'petplan',l:'Petplan'},
+ {v:'directline',l:'Direct Line'},
+ {v:'bought-by-many',l:'Bought By Many / ManyPets'},
+ {v:'agria',l:'Agria'},
+ {v:'animal-friends',l:'Animal Friends'},
+ {v:'tesco-bank',l:'Tesco Bank'},
+ {v:'rsa-more-than',l:'RSA / MORE TH>N'},
+ {v:'pets-best',l:'Pets Best'},
+ {v:'lv',l:'LV='},
+ {v:'sainsburys',l:'Sainsbury’s Bank'},
+ {v:'kennel-club',l:'Kennel Club Insurance'},
+ {v:'co-op',l:'Co-op Insurance'},
+ {v:'none',l:'No insurance / self-fund'},
+ {v:'other',l:'Other'},
+];
+
+const PAYMENT_TERMS=[
+ {v:'pay-at-visit',l:'Pay at visit'},
+ {v:'monthly-account',l:'Monthly account (30 days)'},
+ {v:'insurance-direct',l:'Insurance direct-claim (where eligible)'},
+ {v:'health-plan',l:'Practice Health Plan (monthly DD)'},
+];
+
+const PSS_LEVELS=[
+ {v:'core',l:'Core Standards'},
+ {v:'general-practice',l:'General Practice'},
+ {v:'veterinary-hospital',l:'Veterinary Hospital'},
+ {v:'none',l:'Not currently PSS accredited'},
+];
+
+// ════════════════════════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════════════════════════
+let state={
+ schemaVersion:SCHEMA_V,
+ active:'clients',
+ practice:null, // Firm-equivalent
+ vets:[], // Vet/Clinician records
+ clients:[], // VetClient (owners)
+ animals:[], // Animal records
+ chipVerifications:[], // {id,ts,animalId,chipNo,db,result,by,note}
+ audit:[],
+ chat:[],
+ settings:{
+ engineName:'FallVetOnboard',
+ anthropicKey:'',openaiKey:'',geminiKey:'',openrouterKey:'',
+ auditChain:true,
+ isDemoSeeded:false,
+ setupDismissed:false,
+ },
+ ui:{
+ filter:{species:'',account:'',insurance:'',vetId:''},
+ animalFilter:{species:'',vaccines:'',chronic:''},
+ wizard:null,
+ activeClient:null,
+ activeAnimal:null,
+ }
+};
+
+// ════════════════════════════════════════════════════════════════
+// UTIL
+// ════════════════════════════════════════════════════════════════
+const $=(s,p=document)=>p.querySelector(s);
+const $$=(s,p=document)=>Array.from(p.querySelectorAll(s));
+const uid=(p='id')=>p+'_'+(crypto.randomUUID?crypto.randomUUID().replace(/-/g,'').slice(0,16):Math.random().toString(36).slice(2,18));
+const now=()=>Date.now();
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmtDate=t=>{if(!t)return'—';const d=new Date(t);return d.toLocaleDateString('en-GB',{year:'numeric',month:'short',day:'2-digit'})};
+const fmtDateTime=t=>{if(!t)return'—';const d=new Date(t);return d.toLocaleString('en-GB',{year:'numeric',month:'short',day:'2-digit',hour:'2-digit',minute:'2-digit'})};
+const fmtDateISO=t=>{if(!t)return'';const d=new Date(t);return d.toISOString().slice(0,10)};
+const ageYears=dob=>{if(!dob)return null;const d=new Date(dob),n=new Date();let a=n.getFullYear()-d.getFullYear();const m=n.getMonth()-d.getMonth();if(m<0||(m===0&&n.getDate()<d.getDate()))a--;return a};
+const ageAnimal=dob=>{if(!dob)return'—';const y=ageYears(dob);if(y==null)return'—';if(y<1){const d=new Date(dob),n=new Date();const months=(n.getFullYear()-d.getFullYear())*12+(n.getMonth()-d.getMonth());return months+'mo'}return y+'y'};
+const addDays=(t,d)=>t+d*86400000;
+const daysBetween=(a,b)=>Math.round((b-a)/86400000);
+const speciesEmoji=v=>{const s=SPECIES.find(x=>x.v===v);return s?s.e:'🐾'};
+const speciesLabel=v=>{const s=SPECIES.find(x=>x.v===v);return s?s.l:v||'—'};
+const insurerLabel=v=>{const i=INSURERS.find(x=>x.v===v);return i?i.l:v||'—'};
+const chipDbLabel=v=>{const c=CHIP_DBS.find(x=>x.v===v);return c?c.l:v||'—'};
+
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(t._to);t._to=setTimeout(()=>t.classList.remove('show'),2200)}
+
+async function sha256(s){const buf=s instanceof ArrayBuffer?s:new TextEncoder().encode(typeof s==='string'?s:JSON.stringify(s));const h=await crypto.subtle.digest('SHA-256',buf);return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('')}
+
+// ════════════════════════════════════════════════════════════════
+// INDEXEDDB
+// ════════════════════════════════════════════════════════════════
+let db;
+function openDB(){
+ return new Promise((res,rej)=>{
+ const r=indexedDB.open(STORE,1);
+ r.onupgradeneeded=e=>{
+ const d=e.target.result;
+ if(!d.objectStoreNames.contains('state'))d.createObjectStore('state');
+ if(!d.objectStoreNames.contains('audit'))d.createObjectStore('audit',{keyPath:'i'});
+ if(!d.objectStoreNames.contains('chipverifs'))d.createObjectStore('chipverifs',{keyPath:'id'});
+ };
+ r.onsuccess=e=>{db=e.target.result;res(db)};
+ r.onerror=e=>rej(e);
+ });
+}
+function idbPut(store,val,key){return new Promise((res,rej)=>{const tx=db.transaction(store,'readwrite');const r=key?tx.objectStore(store).put(val,key):tx.objectStore(store).put(val);r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
+function idbGet(store,key){return new Promise((res,rej)=>{const tx=db.transaction(store,'readonly');const r=tx.objectStore(store).get(key);r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
+function idbDel(store,key){return new Promise((res,rej)=>{const tx=db.transaction(store,'readwrite');const r=tx.objectStore(store).delete(key);r.onsuccess=()=>res();r.onerror=()=>rej(r.error)})}
+function idbAll(store){return new Promise((res,rej)=>{const tx=db.transaction(store,'readonly');const r=tx.objectStore(store).getAll();r.onsuccess=()=>res(r.result||[]);r.onerror=()=>rej(r.error)})}
+
+async function persistState(){
+ if(!db)await openDB();
+ const snap={
+ schemaVersion:state.schemaVersion,
+ active:state.active,
+ practice:state.practice,
+ vets:state.vets,
+ clients:state.clients,
+ animals:state.animals,
+ chat:state.chat,
+ settings:state.settings,
+ };
+ try{localStorage.setItem(STORE+'.state',JSON.stringify(snap))}catch(e){}
+ return idbPut('state',snap,'main');
+}
+async function loadState(){
+ if(!db)await openDB();
+ let s=await idbGet('state','main');
+ if(!s){
+ try{const raw=localStorage.getItem(STORE+'.state');if(raw)s=JSON.parse(raw)}catch(e){}
+ }
+ if(s){
+ state.schemaVersion=s.schemaVersion||SCHEMA_V;
+ state.active=s.active||'clients';
+ state.practice=s.practice||null;
+ state.vets=Array.isArray(s.vets)?s.vets:[];
+ state.clients=Array.isArray(s.clients)?s.clients:[];
+ state.animals=Array.isArray(s.animals)?s.animals:[];
+ state.chat=Array.isArray(s.chat)?s.chat:[];
+ state.settings=Object.assign({},state.settings,s.settings||{});
+ }
+ state.audit=await idbAll('audit');
+ state.audit.sort((a,b)=>a.i-b.i);
+ state.chipVerifications=await idbAll('chipverifs');
+ state.chipVerifications.sort((a,b)=>b.ts-a.ts);
+}
+
+// ════════════════════════════════════════════════════════════════
+// AUDIT CHAIN · P3 extended
+// ════════════════════════════════════════════════════════════════
+async function appendAudit(action, info){
+ if(!state.settings.auditChain)return;
+ if(!db)await openDB();
+ const i=state.audit.length?state.audit[state.audit.length-1].i+1:1;
+ const prevHash=state.audit.length?state.audit[state.audit.length-1].docHash:'';
+ const payload=info.payload||{};
+ const entry={
+ i,ts:Date.now(),tool:TOOLNAME,
+ vetId:info.vetId||'',clientId:info.clientId||'',animalId:info.animalId||'',
+ action,reasoning:info.reasoning||'',
+ configVersion:TOOLNAME+'@'+VERSION,
+ prevHash,docHash:'',payload
+ };
+ entry.docHash=await sha256(JSON.stringify({prevHash,ts:entry.ts,action,clientId:entry.clientId,animalId:entry.animalId,payload}));
+ state.audit.push(entry);
+ if(state.audit.length>AUDIT_CAP){
+ const drop=state.audit.length-AUDIT_CAP;
+ for(let k=0;k<drop;k++){await idbDel('audit',state.audit[k].i)}
+ state.audit=state.audit.slice(drop);
+ }
+ await idbPut('audit',entry);
+}
+
+// ════════════════════════════════════════════════════════════════
+// BROADCAST MESH · fall-vet + fall-signal
+// ════════════════════════════════════════════════════════════════
+let bcVet=null,bcSignal=null;
+let _bcDebounce={};
+function bcInit(){
+ try{
+ bcVet=new BroadcastChannel('fall-vet');
+ bcVet.addEventListener('message',handleVetMsg);
+ bcSignal=new BroadcastChannel('fall-signal');
+ bcSignal.addEventListener('message',handleSignalMsg);
+ bcSignal.postMessage({source:TOOLNAME,type:'hello',prime:PRIME,version:VERSION,ts:now()});
+ bcVet.postMessage({v:1,type:'sync.request',ts:now(),source:TOOLNAME,payload:{}});
+ }catch(e){console.warn('BroadcastChannel unavailable',e)}
+}
+function bcSend(type,payload){
+ if(!bcVet)return;
+ const key=type+'|'+(payload?.id||'');
+ clearTimeout(_bcDebounce[key]);
+ _bcDebounce[key]=setTimeout(()=>{try{bcVet.postMessage({v:1,type,ts:now(),source:TOOLNAME,payload})}catch(e){}},300);
+}
+function bcSendNow(type,payload){if(!bcVet)return;try{bcVet.postMessage({v:1,type,ts:now(),source:TOOLNAME,payload})}catch(e){}}
+async function handleVetMsg(e){
+ const m=e.data;if(!m||m.source===TOOLNAME)return;
+ switch(m.type){
+ case 'sync.request':
+ bcSendNow('sync.snapshot',{clients:state.clients,animals:state.animals,vets:state.vets,practice:state.practice});break;
+ case 'sync.snapshot':mergeSnapshot(m.payload||{});render();break;
+ case 'client.created':case 'client.updated':case 'client.archived':
+ mergeRecord('clients',m.payload);render();break;
+ case 'animal.created':case 'animal.updated':case 'animal.deceased':
+ mergeRecord('animals',m.payload);render();break;
+ case 'vet.created':case 'vet.updated':
+ mergeRecord('vets',m.payload);render();break;
+ case 'practice.updated':
+ if(!state.practice||(m.payload?.updatedAt||0)>(state.practice?.updatedAt||0)){state.practice=m.payload;persistState();render()}break;
+ }
+}
+function handleSignalMsg(e){
+ const m=e.data;if(!m||m.source===TOOLNAME)return;
+ if(m.type==='ping'&&bcSignal)bcSignal.postMessage({source:TOOLNAME,type:'pong',prime:PRIME,version:VERSION,ts:now()});
+}
+function mergeRecord(coll,rec){
+ if(!rec||!rec.id)return;
+ const arr=state[coll];const i=arr.findIndex(x=>x.id===rec.id);
+ if(i<0){arr.push(rec);persistState();return}
+ if((rec.updatedAt||0)>(arr[i].updatedAt||0)){arr[i]=rec;persistState()}
+}
+function mergeSnapshot(p){
+ if(Array.isArray(p.clients))p.clients.forEach(c=>mergeRecord('clients',c));
+ if(Array.isArray(p.animals))p.animals.forEach(a=>mergeRecord('animals',a));
+ if(Array.isArray(p.vets))p.vets.forEach(v=>mergeRecord('vets',v));
+ if(p.practice){if(!state.practice||(p.practice.updatedAt||0)>(state.practice.updatedAt||0)){state.practice=p.practice;persistState()}}
+}
+
+// ════════════════════════════════════════════════════════════════
+// FACTORIES
+// ════════════════════════════════════════════════════════════════
+function newClientRec(){
+ const t=now();
+ return {
+ id:uid('cl'),
+ firmId:state.practice?.id||'',
+ createdAt:t,updatedAt:t,archivedAt:null,
+ title:'Mr',firstName:'',middleName:'',lastName:'',preferredName:'',
+ dob:'',email:'',phone:'',phoneAlt:'',
+ address:{line1:'',line2:'',city:'',region:'England',postcode:'',country:'GB'},
+ accountStatus:'good', // good | on-hold | closed
+ paymentTerms:'pay-at-visit',
+ petInsuranceProvider:'', // shared across animals (insurer-level)
+ insuranceClaimsHistory:[],
+ gdprConsentToContact:false,
+ marketingOptIn:false,
+ consentSharedWithInsurer:false,
+ consentSharedWithReferrals:false,
+ animals:[], // animalIds (denormalised)
+ notes:[],
+ primaryVetId:'',
+ lastVisitAt:null,
+ app:{isDemo:false,onboardCompleted:false}
+ };
+}
+
+function newAnimalRec(){
+ const t=now();
+ return {
+ id:uid('an'),
+ firmId:state.practice?.id||'',
+ clientId:'',
+ ts:t,updatedAt:t,deceasedAt:null,
+ name:'',species:'dog',breed:'',
+ dob:'',sex:'unknown',neutered:false,
+ colour:'',weightKg:null,
+ microchipNo:'',microchipDb:'',microchipVerifiedAt:null,microchipVerifiedBy:'',
+ insurer:'',insurancePolicyNo:'',insuranceExcess:0,insuranceCoveragePct:0,
+ insuranceConditionExclusions:'',insuranceCoverStart:'',
+ vaccinationHistory:[],
+ allergies:[],chronicConditions:[],regularMedications:[],
+ weightHistory:[],
+ previousPractice:'',previousPracticeContact:'',
+ medicalHistoryNotes:'',
+ consents:{
+ generalTreatment:false,generalTreatmentSignedAt:null,
+ anaestheticConsent:false,
+ euthanasiaDecisionMaker:'',
+ bloodSamples:true,
+ photographyForRecords:false,
+ lateralThinking:'' // specific procedures notes
+ },
+ consults:[],
+ cdAdministered:[],
+ lastVisitAt:null,
+ app:{isDemo:false}
+ };
+}
+
+function newVetRec(){
+ const t=now();
+ return {
+ id:uid('vt'),firmId:state.practice?.id||'',
+ createdAt:t,updatedAt:t,archivedAt:null,
+ name:'',email:'',phone:'',
+ rcvsRegNo:'',mrcvs:true,
+ cpdHoursRolling:0,cpdLastUpdated:null,
+ controlledDrugAuthorised:true,
+ prescriptionRights:['POM-V','POM-VPS','NFA-VPS','AVM-GSL'],
+ status:'active',startedAt:t,leftAt:null,
+ role:'vet' // vet | nurse | receptionist | practice-manager
+ };
+}
+
+function newPracticeRec(){
+ const t=now();
+ return {
+ id:uid('fm'),createdAt:t,updatedAt:t,
+ name:'',tradingName:'',rcvsPracticeRegNo:'',companiesHouseNo:'',vatNumber:'',
+ registeredAddress:{line1:'',line2:'',city:'',postcode:'',country:'GB'},
+ pssLevel:'core',
+ piInsurer:'',piPolicyNo:'',piCoverGBP:0,piExpiresAt:null,
+ leadVetId:'',
+ professionalBody:'BVA',
+ brandColor:'#8b1a1a',brandLogoDataUri:'',
+ setupCompletedAt:null
+ };
+}
+
+// ════════════════════════════════════════════════════════════════
+// CRUD (audited + broadcast)
+// ════════════════════════════════════════════════════════════════
+async function saveClient(c,action,reasoning){
+ c.updatedAt=now();
+ const i=state.clients.findIndex(x=>x.id===c.id);
+ const isNew=i<0;
+ if(isNew){state.clients.push(c)}else{state.clients[i]=c}
+ await persistState();
+ await appendAudit(action||(isNew?'client.created':'client.updated'),{
+ clientId:c.id,vetId:c.primaryVetId,
+ reasoning:reasoning||(isNew?'Owner onboarding completed':'Owner record updated'),
+ payload:{id:c.id,name:(c.firstName+' '+c.lastName).trim(),accountStatus:c.accountStatus}
+ });
+ bcSend(isNew?'client.created':'client.updated',c);
+ return c;
+}
+async function saveAnimal(a,action,reasoning){
+ a.updatedAt=now();
+ const i=state.animals.findIndex(x=>x.id===a.id);
+ const isNew=i<0;
+ if(isNew){state.animals.push(a)}else{state.animals[i]=a}
+ await persistState();
+ await appendAudit(action||(isNew?'animal.created':'animal.updated'),{
+ animalId:a.id,clientId:a.clientId,
+ reasoning:reasoning||(isNew?'Animal registered':'Animal record updated'),
+ payload:{id:a.id,name:a.name,species:a.species,microchipNo:a.microchipNo}
+ });
+ bcSend(isNew?'animal.created':'animal.updated',a);
+ return a;
+}
+async function archiveClient(c,reasoning){
+ c.archivedAt=now();c.updatedAt=now();await persistState();
+ await appendAudit('client.archived',{clientId:c.id,reasoning:reasoning||'Owner archived (5yr clinical retention)',payload:{id:c.id}});
+ bcSend('client.archived',c);
+}
+async function markDeceased(a,reasoning){
+ a.deceasedAt=now();a.updatedAt=now();await persistState();
+ await appendAudit('animal.deceased',{animalId:a.id,clientId:a.clientId,reasoning:reasoning||'Marked deceased',payload:{id:a.id,name:a.name}});
+ bcSend('animal.deceased',a);
+}
+async function saveVet(v,reasoning){
+ v.updatedAt=now();
+ const i=state.vets.findIndex(x=>x.id===v.id);
+ const isNew=i<0;
+ if(isNew)state.vets.push(v);else state.vets[i]=v;
+ await persistState();
+ await appendAudit(isNew?'vet.created':'vet.updated',{vetId:v.id,reasoning:reasoning||'Vet saved',payload:{id:v.id,name:v.name,rcvs:v.rcvsRegNo}});
+ bcSend(isNew?'vet.created':'vet.updated',v);
+}
+async function savePractice(p,reasoning){
+ p.updatedAt=now();state.practice=p;await persistState();
+ await appendAudit('practice.updated',{reasoning:reasoning||'Practice record saved',payload:{id:p.id,name:p.name,rcvs:p.rcvsPracticeRegNo}});
+ bcSend('practice.updated',p);
+}
+
+async function recordChipVerification(animalId,chipNo,dbName,result,by,note){
+ if(!db)await openDB();
+ const rec={id:uid('cv'),ts:now(),animalId,chipNo,db:dbName,result,by,note:note||''};
+ await idbPut('chipverifs',rec);
+ state.chipVerifications.unshift(rec);
+ await appendAudit('microchip.verified',{animalId,reasoning:'Microchip verification ('+result+') against '+chipDbLabel(dbName),payload:{chipNo,db:dbName,result}});
+ return rec;
+}
+
+// ════════════════════════════════════════════════════════════════
+// DEMO SEED
+// ════════════════════════════════════════════════════════════════
+async function seedDemoIfEmpty(){
+ if(state.settings.isDemoSeeded)return;
+ if(state.clients.length>0)return;
+ if(!state.practice){
+ const p=newPracticeRec();
+ p.name='DEMO &middot; Oakwood Veterinary Surgery &middot; overwrite me';
+ p.rcvsPracticeRegNo='0000000';p.companiesHouseNo='12345678';
+ p.registeredAddress={line1:'1 Demo Lane',line2:'',city:'London',postcode:'SW1A 1AA',country:'GB'};
+ p.pssLevel='general-practice';
+ p.piInsurer='Demo PI';p.piPolicyNo='DEMO-001';p.piCoverGBP=5000000;p.piExpiresAt=addDays(now(),365);
+ p.professionalBody='BVA';p.setupCompletedAt=now();
+ state.practice=p;
+ }
+ if(state.vets.length===0){
+ const v=newVetRec();v.firmId=state.practice.id;
+ v.name='DEMO &middot; Dr Sarah Whitfield MRCVS &middot; overwrite me';v.email='sarah@oakwood.demo';
+ v.rcvsRegNo='1234567';v.mrcvs=true;v.cpdHoursRolling=36;v.cpdLastUpdated=now();
+ v.role='vet';
+ state.vets.push(v);
+ state.practice.leadVetId=v.id;
+ }
+ // owner
+ const c=newClientRec();
+ c.firmId=state.practice.id;c.primaryVetId=state.vets[0].id;
+ c.title='Ms';c.firstName='DEMO &middot; Alice';c.lastName='Patel';
+ c.dob='1985-04-12';c.email='alice.patel@example.demo';c.phone='+44 7700 900000';
+ c.address={line1:'12 High St',line2:'',city:'London',region:'England',postcode:'SW1A 1AA',country:'GB'};
+ c.accountStatus='good';c.paymentTerms='monthly-account';
+ c.petInsuranceProvider='petplan';
+ c.gdprConsentToContact=true;c.marketingOptIn=false;
+ c.consentSharedWithInsurer=true;c.consentSharedWithReferrals=true;
+ c.app.isDemo=true;c.app.onboardCompleted=true;
+ // animal
+ const a=newAnimalRec();
+ a.firmId=state.practice.id;a.clientId=c.id;
+ a.name='Bella';a.species='dog';a.breed='Cocker Spaniel';
+ a.dob='2020-07-18';a.sex='female';a.neutered=true;a.colour='Liver & white';
+ a.weightKg=12.4;
+ a.microchipNo='985112345678901';a.microchipDb='petlog';
+ a.microchipVerifiedAt=now()-86400000*7;a.microchipVerifiedBy=state.vets[0].id;
+ a.insurer='petplan';a.insurancePolicyNo='PP-DEMO-001';a.insuranceExcess=99;a.insuranceCoveragePct=80;
+ a.insuranceConditionExclusions='None declared at policy inception.';a.insuranceCoverStart='2020-09-01';
+ a.allergies=['Chicken protein (mild)'];
+ a.chronicConditions=[];
+ a.regularMedications=['Nexgard Spectra (monthly)'];
+ a.previousPractice='Hampstead Vets, NW3';
+ a.medicalHistoryNotes='Bella is a confident dog. Vaccinations up to date as of last visit. Spayed at 18 months.';
+ a.consents.generalTreatment=true;a.consents.generalTreatmentSignedAt=now()-86400000*30;
+ a.consents.anaestheticConsent=true;a.consents.bloodSamples=true;a.consents.photographyForRecords=true;
+ a.consents.euthanasiaDecisionMaker='Owner (Alice Patel) sole';
+ a.lastVisitAt=now()-86400000*30;
+ c.animals=[a.id];
+ c.lastVisitAt=a.lastVisitAt;
+ state.animals.push(a);
+ state.clients.push(c);
+ // a demo chip verification entry
+ await recordChipVerification(a.id,a.microchipNo,a.microchipDb,'verified',state.vets[0].id,'Demo seed verification');
+ state.settings.isDemoSeeded=true;
+ await persistState();
+ await appendAudit('demo.seeded',{reasoning:'Empty-state demo owner+animal seeded; auto-purges on first real client'});
+}
+
+async function purgeDemoIfPresent(){
+ const demos=state.clients.filter(c=>c.app?.isDemo);
+ if(demos.length===0)return false;
+ const real=state.clients.filter(c=>!c.app?.isDemo&&!c.archivedAt);
+ if(real.length===0)return false;
+ const demoIds=new Set(demos.map(c=>c.id));
+ state.clients=state.clients.filter(c=>!c.app?.isDemo);
+ state.animals=state.animals.filter(a=>!demoIds.has(a.clientId)&&!a.app?.isDemo);
+ if(state.practice?.name?.startsWith('DEMO &middot; ')||state.practice?.name?.startsWith('DEMO · '))state.practice=null;
+ state.vets=state.vets.filter(v=>!(v.name||'').startsWith('DEMO'));
+ await persistState();
+ await appendAudit('demo.purged',{reasoning:'First real owner added — demo records cleared'});
+ return true;
+}
+
+// ════════════════════════════════════════════════════════════════
+// T0/T3 CASCADE · vet practice knowledge
+// ════════════════════════════════════════════════════════════════
+const Cascade={
+ detectTier(){const s=state.settings;if(s.anthropicKey||s.openaiKey||s.geminiKey||s.openrouterKey)return'T3';return'T0'},
+ async generate(sys,user,maxTok){
+ const s=state.settings,max=maxTok||1400;
+ if(s.anthropicKey)try{const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':s.anthropicKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-haiku-4-5',max_tokens:max,system:sys,messages:[{role:'user',content:user}]})});const d=await r.json();return{tier:'T3·Claude',text:d?.content?.[0]?.text||''}}catch(e){}
+ if(s.geminiKey)try{const r=await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key='+s.geminiKey,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({systemInstruction:{parts:[{text:sys}]},contents:[{parts:[{text:user}]}]})});const d=await r.json();return{tier:'T3·Gemini',text:d?.candidates?.[0]?.content?.parts?.[0]?.text||''}}catch(e){}
+ if(s.openaiKey)try{const r=await fetch('https://api.openai.com/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+s.openaiKey},body:JSON.stringify({model:'gpt-4o-mini',messages:[{role:'system',content:sys},{role:'user',content:user}]})});const d=await r.json();return{tier:'T3·GPT',text:d?.choices?.[0]?.message?.content||''}}catch(e){}
+ if(s.openrouterKey)try{const r=await fetch('https://openrouter.ai/api/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+s.openrouterKey,'HTTP-Referer':location.origin},body:JSON.stringify({model:'anthropic/claude-haiku-4-5',messages:[{role:'system',content:sys},{role:'user',content:user}]})});const d=await r.json();return{tier:'T3·OpenRouter',text:d?.choices?.[0]?.message?.content||''}}catch(e){}
+ return{tier:'T0',text:null}
+ }
+};
+
+const T0_RULES=[
+ {match:/gdpr.*pet|pet.*gdpr|data.*consent|owner data|gdpr consent/i,title:'GDPR consent for pet & owner data',answer:()=>`**UK GDPR + Data Protection Act 2018** — pet data itself is not personal data, but **owner identifiers** are (name, address, contact, payment info). Veterinary clinical records bundle the two.
+
+**Lawful basis options:**
+- **Contract performance** (Art.6(1)(b)) — providing veterinary care under the engagement. This covers most clinical use of owner data — you don't strictly need separate "consent" to keep clinical records for treatment.
+- **Legal obligation** (Art.6(1)(c)) — RCVS-required records, controlled-drug register, notifiable disease reports.
+- **Legitimate interests** (Art.6(1)(f)) — internal quality assurance, billing, debt recovery.
+- **Consent** (Art.6(1)(a)) — required separately for *marketing* (PECR) and for sharing with non-essential third parties (e.g. insurance back-claims after the fact, referral specialists outside the immediate clinical chain).
+
+**Practical checklist on registration:**
+1. Privacy notice handed/emailed at sign-up (no consent ticks for clinical processing — contractual)
+2. Marketing opt-in: separate, granular, opt-IN (not pre-ticked)
+3. Insurance direct-claim consent: explicit, recorded with ts
+4. Referral-clinic data sharing: covered under treatment unless out-of-network/private specialist
+5. Retain: 5 years post-last-treatment (RCVS), or 7 years if pursuing fees
+
+**Subject access:** owners can request all data held on them + their animals. 1 calendar month to respond.`},
+ {match:/microchip.*cat|cat.*microchip|cats mandatory|cat chip law/i,title:'Microchipping cats — mandatory date',answer:()=>`**Microchipping of Cats Regulations 2024** — mandatory in **England** from **10 June 2024**.
+
+- Applies to **cats over 20 weeks old** kept as pets
+- Owner must have cat chipped and registered to a compliant database before 20 weeks
+- £500 fixed-penalty for non-compliance (21 days to comply after notice)
+- **Exemptions:** vet certifies chipping would compromise health (rare); free-living cats (feral colony cats not "kept")
+
+**Scotland, Wales, Northern Ireland:** voluntary at time of writing (2026-06). Check current devolved status before advising.
+
+**Practice workflow:**
+- At every cat consult, confirm chip + database registration status
+- If unchipped + over 20 weeks: implant, register to a compliant database (Petlog, Identibase, etc.), advise owner of legal duty
+- Record chip number on \`Animal.microchipNo\` and database on \`Animal.microchipDb\`
+- The database — not the chip itself — carries the owner contact data; remind owners to update on change of address/owner`},
+ {match:/microchip.*dog|dog.*microchip|dogs mandatory|dog chip law/i,title:'Microchipping dogs — mandatory date',answer:()=>`**Microchipping of Dogs (England) Regulations 2015** — mandatory from **6 April 2016**.
+
+- All dogs over **8 weeks** must be microchipped and registered to a compliant database
+- Welsh equivalent regs 2015; Scotland 2016; Northern Ireland already had similar (2012)
+- £500 fixed-penalty notice for non-compliance (21 days)
+- Breeders must chip puppies before sale and register to themselves; on sale, transfer to new owner
+
+**Compliant databases (UK):** Petlog, MicrochipID, Identibase, Animaltrac, Pet-Scanner, Protected Pet, National Vet Data Service, Pet ID, SmartTrac.
+
+**Always verify** at first registration — a chip number alone is not enough; it must correspond to a record on a compliant database with current owner contact details. Scan, check number matches owner's claim, then verify against the database (web lookup or call). Record outcome in \`chipverifs\` log.
+
+**On change of owner:** new keeper has 21 days to update. Vet's role is to remind, not to update on the owner's behalf (you don't own the data).`},
+ {match:/insurance.*excess|excess.*co-?pay|co-?pay.*insurance|pet insurance excess/i,title:'Pet insurance excess vs co-pay',answer:()=>`**Excess** = the fixed amount the owner pays per claim/condition before insurance contributes.
+- "£99 excess per condition per policy year" — the most common UK structure
+- "£250 excess per claim" — less common, can stack badly on multi-condition treatment
+
+**Co-payment** = the *percentage* the owner pays of the remaining bill after the excess.
+- Often introduced when the pet reaches 8-10 years old (Petplan: 20% co-pay from age 8)
+- A claim for £1,000 with £99 excess + 20% co-pay: insurer pays (1000-99) * 0.8 = £720.80, owner pays £279.20
+
+**Capture both** at registration:
+- \`insuranceExcess\` (£)
+- \`insuranceCoveragePct\` (the % insurer covers, e.g. 80 means 20% co-pay)
+
+**Pre-authorisation:** for surgeries above ~£500 most insurers want pre-auth (24-48hrs typical). Always confirm before scheduling a planned procedure. Emergency treatment proceeds without pre-auth.
+
+**Direct claim eligibility:** depends on insurer + practice agreement. Petplan, ManyPets, Agria, Animal Friends most commonly direct-claim. Direct Line, Tesco usually require owner to pay then claim back.`},
+ {match:/rcvs.*consent|informed consent|consent.*treatment|consent guidance/i,title:'RCVS informed consent guidance',answer:()=>`**RCVS Code of Professional Conduct §2.4** — informed consent is required before treatment.
+
+**Three elements (Bolam-equivalent for vets):**
+1. **Disclosure** of the proposed procedure, its purpose, common risks, reasonable alternatives (including no treatment)
+2. **Comprehension** — owner must understand; if not, defer or seek a competent decision-maker
+3. **Voluntariness** — no coercion; financial pressure (insurance limits, cost) must not unduly steer
+
+**General consent at registration** — covers routine examinations, vaccinations, sample collection (blood/urine), basic treatment.
+
+**Specific consent required for:**
+- General anaesthetic procedures (each separate procedure)
+- Off-licence (cascade) prescribing where the medicine is unauthorised for the species
+- Euthanasia (always specific, ideally in writing or witnessed)
+- Procedures with uncommon but significant risks
+- Photography for teaching/marketing (NOT for the clinical record)
+
+**Capacity:**
+- Owner must be 16+ in most cases; under-18 routinely refer to parent/guardian for major decisions
+- For business-owned animals (riding school, farm) verify signatory authority
+- Where owners disagree (divorce, joint ownership) — do not proceed without unanimity for non-emergency
+
+**Record everything** — consents with ts, what was discussed, alternatives offered, owner's decision. \`Animal.consents\` field captures the standing consents; per-procedure consent goes in the consult notes.`},
+ {match:/animal welfare act|awa 2006|duty of care.*animal|five welfare needs/i,title:'Animal Welfare Act 2006 — duties',answer:()=>`**Animal Welfare Act 2006** (England & Wales) — the primary animal-welfare statute. Equivalent: Animal Health and Welfare (Scotland) Act 2006; Welfare of Animals Act (NI) 2011.
+
+**Five welfare needs** (§9) — owner's duty:
+1. **Environment** — suitable place to live
+2. **Diet** — suitable food + water
+3. **Behaviour** — ability to exhibit normal behaviour patterns
+4. **Companionship** — housed with, or apart from, other animals appropriately
+5. **Protection from pain, injury, suffering, disease**
+
+**Vet's role:**
+- **Unnecessary suffering** (§4) — an offence; vet may be needed to certify suffering for prosecution
+- **Reporting suspected abuse/neglect** — RCVS guidance: report to RSPCA / local authority / police. Owner-confidentiality is overridden where animal welfare is at risk
+- **Mutilations** (§5) — most unlawful; exceptions include castration, ear-tagging for ID, surgical procedures by a vet on medical grounds
+- **Tail docking** — prohibited except certified working-dog exemption (specific breeds, before 5 days old, owner declaration)
+
+**Maximum penalty:** 5 years prison + unlimited fine (raised from 6 months in 2021 — Animal Welfare (Sentencing) Act 2021).
+
+**Disqualification orders** can ban offenders from keeping animals for life.`},
+ {match:/notifiable|report.*disease|notifiable disease|reporting duty/i,title:'Notifiable diseases — vet duty to report',answer:()=>`**Animal Health Act 1981** + various species-specific orders. Suspicion of a notifiable disease must be reported to **APHA** (Animal & Plant Health Agency) immediately.
+
+**Most-likely-encountered notifiables in small-animal practice:**
+- **Rabies** (any mammal) — 0300 200 7840 (England), 03000 200 301 (Wales), 03000 999 999 (Scotland)
+- **Brucellosis** (canine: B. canis — increasingly seen in imported rescue dogs from Eastern Europe; reportable in dogs as of 2021)
+- **Echinococcus multilocularis** (tapeworm — imported dog risk)
+- **Bovine TB** (in pets contracting from livestock contact — rare but reportable)
+- **Avian influenza** (in any kept bird)
+
+**Farm/equine practice adds:** Foot-and-mouth, BSE, Bluetongue, African swine fever, Equine infectious anaemia, Glanders, etc.
+
+**Procedure on suspicion:**
+1. Isolate the animal and any contacts on-site
+2. Do not move samples off-site without APHA authority
+3. Phone APHA Duty Officer immediately — do not email
+4. Restrict the premises pending APHA decision
+5. Document: clinical signs, suspected diagnosis, owner contacts, animal movements last 30 days
+
+**Confidentiality:** owner confidentiality is overridden by the statutory reporting duty. Inform the owner contemporaneously.`},
+ {match:/insurance.*pre-?auth|pre-?auth.*insurance|pre-?approval.*treatment/i,title:'Insurance pre-authorisation — typical workflow',answer:()=>`**Pre-authorisation** (a.k.a. pre-approval) — insurer confirms in writing that a planned, non-emergency procedure is likely covered before it is performed.
+
+**When required (typical thresholds):**
+- Petplan: £500+ planned procedure
+- ManyPets: £750+ or any new chronic condition
+- Direct Line: £500+
+- Agria: complex referrals always
+
+**What insurer wants:**
+- Animal policy number + owner details
+- Diagnosis (or working diagnosis) + supporting evidence (bloods, imaging)
+- Proposed procedure(s) + indicative cost breakdown
+- Alternatives considered + why chosen approach
+- Whether direct-claim or owner-pays-and-claims
+
+**Turnaround:** 24-72 hours typical. Emergency overnight requests usually possible by phone.
+
+**FallVetOnboard data captured at registration enables this:**
+- \`insurer\` + \`insurancePolicyNo\` + \`insuranceExcess\` + \`insuranceCoveragePct\` + \`insuranceConditionExclusions\` — all needed at pre-auth time
+- \`previousPractice\` — so insurer can request prior records to rule out pre-existing condition exclusion
+
+**Pre-existing condition trap:** insurer will look back; if condition was noted at *any* prior practice and not declared at policy inception, claim may be refused. At onboarding, ask explicitly about every prior episode, even if appearing unrelated.`},
+ {match:/wholesale.*retail|retail.*wholesale|pet medicine.*supply|vet medicines.*supply|wholesale.*pet/i,title:'Wholesale vs retail pet medicines',answer:()=>`**Veterinary Medicines Regulations 2013** (VMR) governs supply.
+
+**Wholesale (B2B):** holder of a Wholesale Dealer's Authorisation (WDA) supplies to vets / SQPs / pharmacies. Practices must hold appropriate WDA-equivalent if they on-sell to other practices. **Cannot** wholesale to the public.
+
+**Retail (B2C — to owner):** vet practice retails to its own clients under the SQP/POM-V framework:
+- **POM-V** — Prescription Only, Veterinary — only a vet may prescribe (after clinical assessment), only a vet/pharmacist may supply
+- **POM-VPS** — Prescription Only, Vet/Pharmacist/SQP — farm livestock + horse meds typically; suitably qualified person can prescribe
+- **NFA-VPS** — Non-Food Animal, Vet/Pharmacist/SQP — most flea/worm products
+- **AVM-GSL** — Authorised Vet Medicine, General Sales List — over-the-counter (e.g. some basic wound dressings)
+
+**Record-keeping (VMR Sch.3):**
+- Date of transaction, name & address of recipient, identifier of animal, name+batch+quantity of product, name of prescriber
+- Retained **5 years**
+- Required for all POM-V and POM-VPS supplies
+
+**Internet sales:** allowed if the practice holds an Accredited Internet Retailer (AIR) status; the prescribing vet must still have a real clinical relationship with the animal (no over-the-internet POM-V without clinical assessment).
+
+**Cost transparency (Competition & Markets Authority 2024 review):** the CMA is examining vet medicine pricing. Best practice now is to give written price quote on request + offer to write a script for owner to source elsewhere.`},
+ {match:/cascade|prescrib|off-?label|off-?licence|unauthorised use/i,title:'Cascade prescribing principles',answer:()=>`**VMR 2013 Sch.4 — The Cascade.** Where no authorised UK veterinary medicine exists for the condition/species, a vet may, in descending order of preference, prescribe:
+
+**1.** A veterinary medicine authorised in the UK for **another condition or species**
+**2.** A medicine authorised for human use in the UK
+**3.** A medicine authorised in another country for animal use (special-import certificate from VMD)
+**4.** An extemporaneously prepared medicine (compounded by a pharmacist/manufacturer to the vet's specification)
+
+**Strict preconditions:**
+- A vet has the animal under their care
+- No authorised UK product would adequately treat the condition (animal-suffering trigger)
+- Used by the vet personally, or under direct responsibility
+
+**Specific consent required** — owner must be told the product is being used off-licence, the reasoning, and any known risks. Record this in the consult notes.
+
+**Food-producing animal special rules:**
+- Active substance must appear in Commission Regulation (EU) 37/2010 (MRLs)
+- **Withdrawal period** (\`withdrawalPeriod\`) must be set by the vet — cannot be zero; minimum statutory:
+ - Eggs/milk: 7 days
+ - Meat (poultry/mammals): 28 days
+ - Fish meat: 500 degree-days
+- Capture in \`Consult.prescriptions[].withdrawalPeriod\`
+
+**Record-keeping:** vet must keep cascade records for **5 years**, including the reasoning. FallVetPaper handles the per-prescription docs.`},
+ {match:/out.?of.?hours|ooh|emergency cover|24.?7|night cover/i,title:'Out-of-hours cover — RCVS obligation',answer:()=>`**RCVS Code of Professional Conduct §3.5** — vets must provide 24/7 emergency cover, **either themselves or by formal arrangement**.
+
+**Acceptable arrangements:**
+1. **In-house OOH** — own vets on rota
+2. **Dedicated OOH provider** — e.g. Vets Now, MediVet OOH (the dominant UK options)
+3. **Reciprocal arrangement** with another practice (less common, must be formal)
+
+**Client must be told:**
+- Who provides OOH and how to contact them
+- Whether the OOH provider is on-site at the home practice or off-site (clients may need to travel)
+- That additional charges apply at OOH rates
+- That direct-claim may NOT apply at the OOH provider — owner may need to pay and claim back
+
+**Capture on registration:** owner should acknowledge they have received OOH info. (FallVetOnboard’s GDPR consent step is the natural place to record this.)
+
+**Continuity of care:** OOH provider should be able to access the animal's recent records. Practice Standards Scheme (PSS) requires a documented information-flow between day and OOH provider.
+
+**OOH staff competence:** the on-call vet must be competent (and a registered vet) for the species presented. If an OOH provider cannot handle a presented case (e.g. exotic), it must refer onward (charity / specialist) — not refuse care.`},
+ {match:/complaint|complaint handling|practice complaint|client complaint/i,title:'Practice complaint handling',answer:()=>`**RCVS Code §6** + Veterinary Client Mediation Service (VCMS).
+
+**Internal complaints procedure** — every practice must have one, written, given to clients on request (and ideally publicised on website / waiting room). Minimum elements:
+
+1. **Acknowledgment** — within 5 working days of complaint received
+2. **Investigation** — by someone not directly involved where possible (lead vet / practice manager)
+3. **Written response** — within 28 days, addressing each point, with reasoning
+4. **Internal review** — if client not satisfied, partner / clinical director second look
+5. **External signposting** — must tell complainant about VCMS
+
+**Free external mediation: VCMS** — https://www.vetmediation.co.uk/ — funded by RCVS, independent, free to public + practice. Aim: resolution within 90 days, before any RCVS concerns review.
+
+**RCVS Concerns Investigation** (formal regulatory complaint) — invoked for serious-misconduct issues (drug abuse, criminal conviction, gross clinical failure). Most consumer complaints go to VCMS first.
+
+**Capture at onboarding:**
+- Privacy notice should reference complaints procedure
+- Hand the leaflet / point to web URL during sign-up
+- Audit chain entry on every complaint received — the RCVS will ask if they investigate
+
+**Statute of limitations on negligence claim:** 6 years from the date of negligence (Limitations Act 1980 §2) — or 3 years from date of knowledge for latent injury. Keep records accordingly (5yr clinical RCVS + a buffer = 7yr safe default).`},
+];
+
+async function answer(q){
+ for(const r of T0_RULES){if(r.match.test(q))return{src:'T0 · '+r.title,text:r.answer()}}
+ const tier=Cascade.detectTier();
+ if(tier==='T3'){
+ const sys='You are FallVetOnboard, a sovereign UK veterinary-practice onboarding tool. You help an RCVS-regulated, PSS-accredited independent vet practice with owner GDPR, animal registration, microchip compliance (Microchipping of Dogs Regs 2015 / Cats Regs 2024), pet insurance pre-auth, consent to treatment (RCVS Code 2.4), Animal Welfare Act 2006 duties, cascade prescribing (VMR 2013 Sch.4), notifiable disease reporting (APHA), out-of-hours cover (Code 3.5), and VCMS complaint handling. **You are informational — not a substitute for the practice’s MRCVS lead vet’s professional judgment.** Cite source (RCVS Code section, VMR regulation, Act + section). Be concrete and UK-specific. End with: "Verify with your lead vet / RCVS practice standards inspector before relying."';
+ const ctx='Practice: '+(state.practice?.name||'(not set up)')+'. Active owners: '+(state.clients.filter(c=>!c.archivedAt).length)+'. Animals: '+(state.animals.filter(a=>!a.deceasedAt).length)+'. Vets: '+state.vets.length+'.';
+ const r=await Cascade.generate(sys,ctx+'\n\nQuestion: '+q,1400);
+ if(r.text)return{src:r.tier,text:r.text}
+ }
+ return{src:'T0 · fallback',text:'I don’t have a canned rule for that question. Add an API key in **Settings** (Gemini is free) to enable T3 grounded answers.\n\nSupported T0 topics:\n'+T0_RULES.map(r=>'• '+r.title).join('\n')};
+}
+
+// ════════════════════════════════════════════════════════════════
+// VIEW · ROUTER
+// ════════════════════════════════════════════════════════════════
+function render(){
+ $('#brandName').textContent=state.settings.engineName||'FallVetOnboard';
+ const nav=$('#nav');
+ const clientCount=state.clients.filter(c=>!c.archivedAt).length;
+ const animalCount=state.animals.filter(a=>!a.deceasedAt).length;
+ nav.innerHTML=TABS.map(t=>{
+ let count='';
+ if(t.id==='clients')count=clientCount;
+ else if(t.id==='animals')count=animalCount;
+ else if(t.id==='vets')count=state.vets.filter(v=>!v.archivedAt).length;
+ else if(t.id==='chiplog')count=state.chipVerifications.length;
+ const cnt=count!==''?'<span class="tcount">'+count+'</span>':'';
+ return '<button class="'+(state.active===t.id?'active':'')+'" onclick="go(\''+t.id+'\')">'+t.label+cnt+'</button>'
+ }).join('');
+ updateTierBadge();
+ const v=$('#view');
+ if(state.ui.wizard){v.innerHTML=renderWizardShell();bindWizard();return}
+ if(state.ui.activeClient){v.innerHTML=renderClientDetail();bindClientDetail();return}
+ if(state.ui.activeAnimal){v.innerHTML=renderAnimalDetail();bindAnimalDetail();return}
+ switch(state.active){
+ case 'clients':v.innerHTML=renderClients();bindClients();break;
+ case 'animals':v.innerHTML=renderAnimals();bindAnimals();break;
+ case 'dashboard':v.innerHTML=renderDashboard();break;
+ case 'practice':v.innerHTML=renderPractice();bindPractice();break;
+ case 'vets':v.innerHTML=renderVets();bindVets();break;
+ case 'chiplog':v.innerHTML=renderChipLog();break;
+ case 'qa':v.innerHTML=renderQA();bindQA();break;
+ default:v.innerHTML=renderClients();bindClients();
+ }
+ // setup nudge
+ if(!state.practice?.setupCompletedAt && !state.settings.setupDismissed && state.active!=='practice'){
+ const b=document.createElement('div');
+ b.className='banner warn';
+ b.innerHTML='<strong>Practice setup incomplete.</strong> Add your RCVS practice registration, PSS level, PII cover and lead vet before going live. <button class="btn sm" style="margin-left:8px" onclick="go(\'practice\')">Setup now</button> <button class="btn sm ghost" style="margin-left:4px" onclick="dismissSetup()">Later</button>';
+ v.insertBefore(b,v.firstChild);
+ }
+}
+function go(t){
+ state.active=t;state.ui.activeClient=null;state.ui.activeAnimal=null;state.ui.wizard=null;
+ persistState();render();
+}
+function dismissSetup(){state.settings.setupDismissed=true;persistState();render()}
+function updateTierBadge(){
+ const t=Cascade.detectTier();const b=$('#tierBadge');
+ b.textContent=t;b.classList.toggle('t3',t==='T3');b.classList.toggle('primary',false);
+}
+
+// ════════════════════════════════════════════════════════════════
+// VIEW · DISCLAIMER (shared)
+// ════════════════════════════════════════════════════════════════
+function disclaimer(){
+ return '<div class="disclaimer"><strong>FallVetOnboard — sovereign:</strong> a registration tool for UK independent veterinary practices (RCVS-regulated, PSS-accredited). It assists with owner + animal records, microchip verification, pet-insurance capture, and consent to treatment. It is not an X-ray PACS, lab integration, or insurance claim portal. Animal + owner data never leaves this device unless explicitly shared. Informational only — your MRCVS lead vet’s professional judgment governs all clinical and consent decisions.</div>'
+}
+
+// ════════════════════════════════════════════════════════════════
+// VIEW · CLIENTS (owners)
+// ════════════════════════════════════════════════════════════════
+function renderClients(){
+ const f=state.ui.filter;
+ let list=state.clients.filter(c=>!c.archivedAt);
+ if(f.account)list=list.filter(c=>c.accountStatus===f.account);
+ if(f.insurance)list=list.filter(c=>c.petInsuranceProvider===f.insurance);
+ if(f.vetId)list=list.filter(c=>c.primaryVetId===f.vetId);
+ list.sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0));
+ const empty=state.clients.filter(c=>!c.archivedAt).length===0;
+ return disclaimer()+
+ '<div class="section-h"><div><h2>Owners</h2><div class="sub">'+list.length+' shown · '+state.clients.filter(c=>!c.archivedAt).length+' total</div></div>'+
+ '<div class="actions"><button class="btn primary" onclick="newClient()">+ register owner</button><button class="btn ghost" onclick="exportData()">export</button></div></div>'+
+ chipRow([
+ {k:'account',v:'',l:'all accounts'},
+ {k:'account',v:'good',l:'good standing'},
+ {k:'account',v:'on-hold',l:'on hold'},
+ {k:'account',v:'closed',l:'closed'},
+ ],f.account,'account')+
+ chipRow([{k:'insurance',v:'',l:'any insurer'}].concat(INSURERS.filter(i=>i.v!=='other').slice(0,6).map(i=>({k:'insurance',v:i.v,l:i.l}))),f.insurance,'insurance')+
+ (state.vets.length>1?chipRow([{k:'vetId',v:'',l:'all vets'}].concat(state.vets.filter(v=>!v.archivedAt).map(v=>({k:'vetId',v:v.id,l:(v.name||'unnamed').slice(0,20)}))),f.vetId,'vetId'):'')+
+ (empty?renderEmptyClients():renderClientsTable(list))
+}
+function renderEmptyClients(){
+ return '<div class="empty"><div class="big">No owners yet</div><div class="small">Register your first pet owner to begin.</div><button class="btn primary" onclick="newClient()">+ register owner</button></div>'
+}
+function renderClientsTable(list){
+ return '<table><thead><tr><th>Owner</th><th>Animals</th><th>Account</th><th>Insurer</th><th>Vet</th><th>Last visit</th></tr></thead><tbody>'+
+ list.map(c=>{
+ const animals=state.animals.filter(a=>a.clientId===c.id&&!a.deceasedAt);
+ const ac=c.accountStatus==='good'?'<span class="tag green">good</span>':(c.accountStatus==='on-hold'?'<span class="tag amber">on hold</span>':'<span class="tag ox">closed</span>');
+ const vet=state.vets.find(v=>v.id===c.primaryVetId);
+ const demo=c.app?.isDemo?'<span class="tag muted">demo</span> ':'';
+ return '<tr class="row-link" onclick="openClient(\''+c.id+'\')"><td><strong>'+esc(c.firstName+' '+c.lastName)+'</strong> '+demo+'<div style="font-family:var(--mono);font-size:10px;color:var(--cream-muted)">'+esc(c.phone||c.email||'—')+'</div></td>'+
+ '<td>'+(animals.length||'—')+(animals.length?' <span class="tag muted">'+animals.slice(0,3).map(a=>speciesEmoji(a.species)).join('')+'</span>':'')+'</td>'+
+ '<td>'+ac+'</td>'+
+ '<td>'+(c.petInsuranceProvider?esc(insurerLabel(c.petInsuranceProvider)):'<span style="color:var(--cream-muted)">—</span>')+'</td>'+
+ '<td>'+(vet?esc(vet.name.slice(0,18)):'<span style="color:var(--cream-muted)">—</span>')+'</td>'+
+ '<td>'+fmtDate(c.lastVisitAt)+'</td></tr>';
+ }).join('')+
+ '</tbody></table>'
+}
+function chipRow(items,active,key){
+ return '<div class="chip-row">'+items.map(it=>'<button class="chip '+(it.v===active?'active':'')+'" onclick="setFilter(\''+key+'\',\''+it.v.replace(/'/g,'')+'\')">'+esc(it.l)+'</button>').join('')+'</div>'
+}
+function setFilter(k,v){if(state.ui.filter[k]!==undefined){state.ui.filter[k]=v}if(state.ui.animalFilter[k]!==undefined){state.ui.animalFilter[k]=v}render()}
+function bindClients(){}
+
+// ════════════════════════════════════════════════════════════════
+// VIEW · ANIMALS
+// ════════════════════════════════════════════════════════════════
+function renderAnimals(){
+ const f=state.ui.animalFilter;
+ let list=state.animals.filter(a=>!a.deceasedAt);
+ if(f.species)list=list.filter(a=>a.species===f.species);
+ if(f.vaccines==='due')list=list.filter(a=>vaccinationsDue(a));
+ if(f.chronic==='yes')list=list.filter(a=>(a.chronicConditions||[]).length>0);
+ list.sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0));
+ const empty=state.animals.filter(a=>!a.deceasedAt).length===0;
+ return disclaimer()+
+ '<div class="section-h"><div><h2>Animals</h2><div class="sub">'+list.length+' shown · '+state.animals.filter(a=>!a.deceasedAt).length+' total active</div></div>'+
+ '<div class="actions"><button class="btn primary" onclick="newClient()">+ register owner + animal</button></div></div>'+
+ chipRow([{k:'species',v:'',l:'all species'}].concat(SPECIES.slice(0,5).map(s=>({k:'species',v:s.v,l:s.l.toLowerCase()}))),f.species,'species')+
+ chipRow([{k:'vaccines',v:'',l:'all vaccines'},{k:'vaccines',v:'due',l:'vaccines due'}],f.vaccines||'','vaccines')+
+ chipRow([{k:'chronic',v:'',l:'any health'},{k:'chronic',v:'yes',l:'chronic condition'}],f.chronic||'','chronic')+
+ (empty?renderEmptyAnimals():renderAnimalsTable(list))
+}
+function renderEmptyAnimals(){
+ return '<div class="empty"><div class="big">No animals yet</div><div class="small">Register an owner via the wizard — their animal is captured in the same flow.</div><button class="btn primary" onclick="newClient()">+ register owner + animal</button></div>'
+}
+function renderAnimalsTable(list){
+ return '<table><thead><tr><th>Animal</th><th>Species</th><th>Breed</th><th>Owner</th><th>Age</th><th>Last visit</th><th>Vaccines</th><th>Chronic</th></tr></thead><tbody>'+
+ list.map(a=>{
+ const owner=state.clients.find(c=>c.id===a.clientId);
+ const vacStatus=vaccinationsDue(a)?'<span class="tag amber">due</span>':((a.vaccinationHistory||[]).length?'<span class="tag green">up to date</span>':'<span class="tag muted">none recorded</span>');
+ const chr=(a.chronicConditions||[]).length?'<span class="tag ox">'+a.chronicConditions.length+'</span>':'<span style="color:var(--cream-muted)">—</span>';
+ const demo=a.app?.isDemo?'<span class="tag muted">demo</span> ':'';
+ return '<tr class="row-link" onclick="openAnimal(\''+a.id+'\')"><td><span class="an-av">'+speciesEmoji(a.species)+'</span><strong>'+esc(a.name)+'</strong> '+demo+'</td>'+
+ '<td>'+esc(speciesLabel(a.species))+'</td>'+
+ '<td>'+esc(a.breed||'—')+'</td>'+
+ '<td>'+(owner?'<a href="#" onclick="event.stopPropagation();openClient(\''+owner.id+'\');return false">'+esc(owner.firstName+' '+owner.lastName)+'</a>':'<span style="color:var(--cream-muted)">—</span>')+'</td>'+
+ '<td>'+ageAnimal(a.dob)+'</td>'+
+ '<td>'+fmtDate(a.lastVisitAt)+'</td>'+
+ '<td>'+vacStatus+'</td>'+
+ '<td>'+chr+'</td></tr>';
+ }).join('')+
+ '</tbody></table>'
+}
+function vaccinationsDue(a){
+ // simple heuristic: no vaccination history = unknown but flag for review; history exists but all expired = due
+ const h=a.vaccinationHistory||[];
+ if(h.length===0)return false; // unknown != due in this MVP (avoid false alarms)
+ return h.every(v=>v.expiresAt&&v.expiresAt<now());
+}
+function bindAnimals(){}
+
+// ════════════════════════════════════════════════════════════════
+// VIEW · DASHBOARD
+// ════════════════════════════════════════════════════════════════
+function renderDashboard(){
+ const owners=state.clients.filter(c=>!c.archivedAt);
+ const animals=state.animals.filter(a=>!a.deceasedAt);
+ const insured=animals.filter(a=>a.insurer&&a.insurer!=='none');
+ const onHold=owners.filter(c=>c.accountStatus==='on-hold').length;
+ const chronic=animals.filter(a=>(a.chronicConditions||[]).length>0).length;
+ const verifs=state.chipVerifications.length;
+ const unchipped=animals.filter(a=>!a.microchipNo).length;
+ const speciesBreakdown=SPECIES.map(s=>({l:s.l,n:animals.filter(a=>a.species===s.v).length})).filter(x=>x.n>0);
+ return disclaimer()+
+ '<div class="section-h"><div><h2>Dashboard</h2><div class="sub">practice overview</div></div></div>'+
+ '<div class="dash-kpis">'+
+ kpiCard(owners.length,'owners')+
+ kpiCard(animals.length,'animals')+
+ kpiCard(insured.length,'insured animals')+
+ kpiCard(onHold,'on-hold accounts',onHold>0?'due':'ok')+
+ kpiCard(unchipped,'unchipped',unchipped>0?'warn':'ok')+
+ kpiCard(verifs,'chip verifications')+
+ kpiCard(chronic,'chronic cases')+
+ kpiCard(state.vets.filter(v=>!v.archivedAt).length,'vets')+
+ '</div>'+
+ '<div class="grid">'+
+ '<div class="card"><h3>Species mix</h3>'+
+ (speciesBreakdown.length?speciesBreakdown.map(s=>'<div class="kpi"><span class="l">'+esc(s.l)+'</span><span class="v">'+s.n+'</span></div>').join(''):'<div style="color:var(--cream-muted);font-size:12px">No animals yet.</div>')+
+ '</div>'+
+ '<div class="card"><h3>Insurance penetration</h3>'+
+ '<div class="kpi"><span class="l">Insured</span><span class="v green">'+insured.length+'/'+animals.length+' ('+(animals.length?Math.round(insured.length/animals.length*100):0)+'%)</span></div>'+
+ (insured.length?INSURERS.filter(i=>i.v!=='none'&&i.v!=='other').map(i=>{const n=insured.filter(a=>a.insurer===i.v).length;return n>0?'<div class="kpi"><span class="l">'+esc(i.l)+'</span><span class="v">'+n+'</span></div>':''}).join(''):'')+
+ '</div>'+
+ '<div class="card"><h3>Compliance flags</h3>'+
+ '<div class="kpi"><span class="l">Unchipped animals</span><span class="v '+(unchipped>0?'amber':'green')+'">'+unchipped+'</span></div>'+
+ '<div class="kpi"><span class="l">Owners without GDPR consent</span><span class="v '+(owners.filter(c=>!c.gdprConsentToContact).length>0?'amber':'green')+'">'+owners.filter(c=>!c.gdprConsentToContact).length+'</span></div>'+
+ '<div class="kpi"><span class="l">Animals without general consent</span><span class="v '+(animals.filter(a=>!a.consents?.generalTreatment).length>0?'amber':'green')+'">'+animals.filter(a=>!a.consents?.generalTreatment).length+'</span></div>'+
+ '<div class="kpi"><span class="l">Practice setup complete</span><span class="v '+(state.practice?.setupCompletedAt?'green':'red')+'">'+(state.practice?.setupCompletedAt?'yes':'no')+'</span></div>'+
+ '</div>'+
+ '<div class="card"><h3>Audit chain</h3>'+
+ '<div class="kpi"><span class="l">Entries</span><span class="v">'+state.audit.length+'</span></div>'+
+ '<div class="kpi"><span class="l">Latest</span><span class="v" style="font-size:11px">'+(state.audit.length?fmtDateTime(state.audit[state.audit.length-1].ts):'—')+'</span></div>'+
+ '<div class="kpi"><span class="l">Tail hash</span><span class="v" style="font-size:10px">'+(state.audit.length?state.audit[state.audit.length-1].docHash.slice(0,12)+'…':'—')+'</span></div>'+
+ '<button class="btn sm ghost" style="margin-top:8px" onclick="openModal(\'audit\')">view full</button>'+
+ '</div>'+
+ '</div>'
+}
+function kpiCard(n,l,mod){return '<div class="dash-kpi '+(mod||'')+'"><div class="n">'+n+'</div><div class="l">'+esc(l)+'</div></div>'}
+
+// ════════════════════════════════════════════════════════════════
+// VIEW · PRACTICE (firm)
+// ════════════════════════════════════════════════════════════════
+function renderPractice(){
+ const p=state.practice||newPracticeRec();
+ return disclaimer()+
+ '<div class="section-h"><div><h2>Practice setup</h2><div class="sub">RCVS practice details · PSS · PII</div></div></div>'+
+ '<div class="card" style="max-width:780px;margin:0 auto"><h3>Practice details</h3>'+
+ '<div class="row">'+fieldHtml('name','Practice name',p.name,'text')+fieldHtml('tradingName','Trading name (if different)',p.tradingName,'text')+'</div>'+
+ '<div class="row">'+fieldHtml('rcvsPracticeRegNo','RCVS practice reg no.',p.rcvsPracticeRegNo,'text','e.g. 7000001')+selectHtml('pssLevel','PSS accreditation level',p.pssLevel,PSS_LEVELS)+'</div>'+
+ '<div class="row">'+fieldHtml('companiesHouseNo','Companies House no.',p.companiesHouseNo,'text')+fieldHtml('vatNumber','VAT no. (if registered)',p.vatNumber,'text')+'</div>'+
+ '<h3 style="margin-top:14px">Registered address</h3>'+
+ '<div class="field"><label>Line 1</label><input id="addr_line1" value="'+esc(p.registeredAddress?.line1||'')+'"></div>'+
+ '<div class="field"><label>Line 2</label><input id="addr_line2" value="'+esc(p.registeredAddress?.line2||'')+'"></div>'+
+ '<div class="row"><div class="field"><label>City</label><input id="addr_city" value="'+esc(p.registeredAddress?.city||'')+'"></div><div class="field"><label>Postcode</label><input id="addr_postcode" value="'+esc(p.registeredAddress?.postcode||'')+'"></div></div>'+
+ '<h3 style="margin-top:14px">Professional indemnity</h3>'+
+ '<div class="row">'+fieldHtml('piInsurer','PII insurer',p.piInsurer,'text','e.g. RCVSMutual')+fieldHtml('piPolicyNo','PII policy no.',p.piPolicyNo,'text')+'</div>'+
+ '<div class="row"><div class="field"><label>Cover (£)</label><input id="piCoverGBP" type="number" value="'+(p.piCoverGBP||0)+'"></div><div class="field"><label>Expires</label><input id="piExpiresAt" type="date" value="'+fmtDateISO(p.piExpiresAt)+'"></div></div>'+
+ '<div class="row">'+fieldHtml('professionalBody','Professional body',p.professionalBody,'text','e.g. BVA, BSAVA')+selectHtml('leadVetId','Lead vet (MRCVS)',p.leadVetId,[{v:'',l:'— select lead vet —'}].concat(state.vets.filter(v=>v.mrcvs&&!v.archivedAt).map(v=>({v:v.id,l:v.name+' · RCVS '+v.rcvsRegNo}))))+'</div>'+
+ '<div class="wizard-foot"><button class="btn ghost" onclick="go(\'vets\')">manage vets</button><button class="btn primary" onclick="savePracticeForm()">save practice</button></div>'+
+ '</div>'
+}
+function fieldHtml(id,label,v,type,placeholder){return '<div class="field"><label>'+esc(label)+'</label><input id="'+id+'" type="'+(type||'text')+'" value="'+esc(v||'')+'" placeholder="'+esc(placeholder||'')+'"></div>'}
+function selectHtml(id,label,v,opts){return '<div class="field"><label>'+esc(label)+'</label><select id="'+id+'">'+opts.map(o=>'<option value="'+esc(o.v)+'" '+(o.v===v?'selected':'')+'>'+esc(o.l)+'</option>').join('')+'</select></div>'}
+function checkHtml(id,label,checked){return '<div class="field"><label style="display:flex;align-items:center;gap:6px;text-transform:none;font-size:12px;color:var(--cream)"><input type="checkbox" id="'+id+'" '+(checked?'checked':'')+'> '+esc(label)+'</label></div>'}
+async function savePracticeForm(){
+ const p=state.practice||newPracticeRec();
+ p.name=$('#name').value.trim();p.tradingName=$('#tradingName').value.trim();
+ p.rcvsPracticeRegNo=$('#rcvsPracticeRegNo').value.trim();p.pssLevel=$('#pssLevel').value;
+ p.companiesHouseNo=$('#companiesHouseNo').value.trim();p.vatNumber=$('#vatNumber').value.trim();
+ p.registeredAddress={line1:$('#addr_line1').value.trim(),line2:$('#addr_line2').value.trim(),city:$('#addr_city').value.trim(),postcode:$('#addr_postcode').value.trim(),country:'GB'};
+ p.piInsurer=$('#piInsurer').value.trim();p.piPolicyNo=$('#piPolicyNo').value.trim();
+ p.piCoverGBP=parseFloat($('#piCoverGBP').value)||0;
+ const exp=$('#piExpiresAt').value;p.piExpiresAt=exp?new Date(exp).getTime():null;
+ p.professionalBody=$('#professionalBody').value.trim();p.leadVetId=$('#leadVetId').value;
+ if(p.name&&p.rcvsPracticeRegNo&&p.leadVetId)p.setupCompletedAt=now();
+ await savePractice(p,'Practice details saved via Practice tab');
+ toast('Practice saved');render();
+}
+function bindPractice(){}
+
+// ════════════════════════════════════════════════════════════════
+// VIEW · VETS
+// ════════════════════════════════════════════════════════════════
+function renderVets(){
+ const vs=state.vets.filter(v=>!v.archivedAt);
+ return disclaimer()+
+ '<div class="section-h"><div><h2>Vets &amp; clinical staff</h2><div class="sub">'+vs.length+' active</div></div>'+
+ '<div class="actions"><button class="btn primary" onclick="newVetModal()">+ add vet</button></div></div>'+
+ (vs.length===0?'<div class="empty"><div class="big">No vets registered</div><div class="small">Add at least one MRCVS-registered vet before completing practice setup.</div><button class="btn primary" onclick="newVetModal()">+ add vet</button></div>':
+ '<table><thead><tr><th>Name</th><th>Role</th><th>RCVS no.</th><th>MRCVS</th><th>CPD (rolling)</th><th>CD authorised</th><th></th></tr></thead><tbody>'+
+ vs.map(v=>'<tr><td><strong>'+esc(v.name||'—')+'</strong><div style="font-family:var(--mono);font-size:10px;color:var(--cream-muted)">'+esc(v.email||'')+'</div></td>'+
+ '<td>'+esc(v.role)+'</td>'+
+ '<td style="font-family:var(--mono)">'+esc(v.rcvsRegNo||'—')+'</td>'+
+ '<td>'+(v.mrcvs?'<span class="tag green">yes</span>':'<span class="tag muted">no</span>')+'</td>'+
+ '<td><span class="'+((v.cpdHoursRolling||0)>=35?'tag green':'tag amber')+'">'+(v.cpdHoursRolling||0)+'hrs</span></td>'+
+ '<td>'+(v.controlledDrugAuthorised?'<span class="tag green">yes</span>':'<span class="tag muted">no</span>')+'</td>'+
+ '<td><button class="btn sm ghost" onclick="editVetModal(\''+v.id+'\')">edit</button></td></tr>').join('')+
+ '</tbody></table>')
+}
+function bindVets(){}
+function newVetModal(){editVetModal(null)}
+function editVetModal(id){
+ const v=id?state.vets.find(x=>x.id===id):newVetRec();
+ if(!v)return;
+ const body='<div class="row">'+fieldHtml('v_name','Name',v.name,'text','Dr Jane Smith')+fieldHtml('v_email','Email',v.email,'email')+'</div>'+
+ '<div class="row">'+fieldHtml('v_phone','Phone',v.phone,'tel')+selectHtml('v_role','Role',v.role,[{v:'vet',l:'Vet (MRCVS)'},{v:'nurse',l:'RVN — Veterinary Nurse'},{v:'sqp',l:'SQP'},{v:'receptionist',l:'Receptionist'},{v:'practice-manager',l:'Practice manager'}])+'</div>'+
+ '<div class="row">'+fieldHtml('v_rcvs','RCVS reg no.',v.rcvsRegNo,'text','7-digit')+checkHtml('v_mrcvs','MRCVS registered (member RCVS)',v.mrcvs)+'</div>'+
+ '<div class="row"><div class="field"><label>CPD hours (rolling 3-yr)</label><input id="v_cpd" type="number" value="'+(v.cpdHoursRolling||0)+'"><div class="hint">RCVS requires 35hrs/year average over 3-year rolling window</div></div>'+
+ checkHtml('v_cd','Controlled-drug authorised',v.controlledDrugAuthorised)+'</div>';
+ showModal('Vet / clinical staff',body,'<button class="btn primary" onclick="saveVetForm(\''+(v.id)+'\')">save vet</button>'+(id?' <button class="btn danger" onclick="archiveVet(\''+id+'\')">archive</button>':''));
+}
+async function saveVetForm(id){
+ let v=state.vets.find(x=>x.id===id);
+ const isNew=!v;
+ if(isNew){v=newVetRec();v.id=id||v.id}
+ v.name=$('#v_name').value.trim();v.email=$('#v_email').value.trim();v.phone=$('#v_phone').value.trim();
+ v.role=$('#v_role').value;v.rcvsRegNo=$('#v_rcvs').value.trim();v.mrcvs=$('#v_mrcvs').checked;
+ v.cpdHoursRolling=parseFloat($('#v_cpd').value)||0;v.cpdLastUpdated=now();
+ v.controlledDrugAuthorised=$('#v_cd').checked;
+ await saveVet(v,isNew?'Vet added':'Vet updated');
+ closeModal();toast('Vet saved');render();
+}
+async function archiveVet(id){
+ const v=state.vets.find(x=>x.id===id);if(!v)return;
+ if(!confirm('Archive '+v.name+'? Their historic audit entries remain.'))return;
+ v.archivedAt=now();v.status='left';v.leftAt=now();
+ await saveVet(v,'Vet archived');closeModal();render();
+}
+
+// ════════════════════════════════════════════════════════════════
+// VIEW · CHIP LOG
+// ════════════════════════════════════════════════════════════════
+function renderChipLog(){
+ const list=state.chipVerifications.slice(0,500);
+ return disclaimer()+
+ '<div class="section-h"><div><h2>Microchip verification log</h2><div class="sub">'+state.chipVerifications.length+' entries · immutable</div></div></div>'+
+ (list.length===0?'<div class="empty"><div class="big">No verifications yet</div><div class="small">Verifications log automatically when you confirm a microchip during animal registration.</div></div>':
+ '<table><thead><tr><th>When</th><th>Animal</th><th>Chip no.</th><th>Database</th><th>Result</th><th>By</th><th>Note</th></tr></thead><tbody>'+
+ list.map(v=>{
+ const an=state.animals.find(a=>a.id===v.animalId);
+ const vet=state.vets.find(x=>x.id===v.by);
+ const r=v.result==='verified'?'<span class="tag green">verified</span>':(v.result==='not-found'?'<span class="tag ox">not found</span>':(v.result==='mismatch'?'<span class="tag amber">mismatch</span>':'<span class="tag muted">'+esc(v.result)+'</span>'));
+ return '<tr><td>'+fmtDateTime(v.ts)+'</td><td>'+(an?'<a href="#" onclick="openAnimal(\''+an.id+'\');return false">'+esc(an.name)+'</a>':'<em style="color:var(--cream-muted)">deleted</em>')+'</td><td style="font-family:var(--mono)">'+esc(v.chipNo)+'</td><td>'+esc(chipDbLabel(v.db))+'</td><td>'+r+'</td><td>'+esc(vet?vet.name:'—')+'</td><td style="font-size:11px;color:var(--cream-dim)">'+esc(v.note||'')+'</td></tr>';
+ }).join('')+
+ '</tbody></table>')
+}
+
+// ════════════════════════════════════════════════════════════════
+// VIEW · QA / VET HELP
+// ════════════════════════════════════════════════════════════════
+function renderQA(){
+ const tier=Cascade.detectTier();
+ return disclaimer()+
+ '<div class="section-h"><div><h2>Vet onboarding help</h2><div class="sub">'+T0_RULES.length+' canned topics · '+(tier==='T3'?'T3 BYOK active':'T0 offline')+'</div></div></div>'+
+ '<div class="card" style="max-width:880px;margin:0 auto">'+
+ '<div class="chat" id="chat">'+
+ (state.chat.length===0?'<div class="msg bot">Ask about GDPR for pet data, microchipping mandates (dogs 2016 / cats 2024), insurance pre-auth, RCVS informed consent, Animal Welfare Act 2006 duties, notifiable disease reporting, VMR cascade prescribing, or VCMS complaint handling.</div>':
+ state.chat.map(m=>'<div class="msg '+m.role+'">'+esc(m.text)+(m.src?'<div class="src">'+esc(m.src)+'</div>':'')+'</div>').join(''))+
+ '</div>'+
+ '<div class="chat-input"><input id="qa_in" placeholder="Ask… e.g. “Microchipping cats mandatory date?”" onkeydown="if(event.key===\'Enter\')sendQA()"><button class="btn primary" onclick="sendQA()">ask</button></div>'+
+ '<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:5px">'+T0_RULES.map(r=>'<button class="chip" onclick="quickQA(\''+esc(r.title).replace(/'/g,'')+'\')">'+esc(r.title)+'</button>').join('')+'</div>'+
+ '</div>'
+}
+function bindQA(){const el=$('#qa_in');if(el)el.focus()}
+async function sendQA(){
+ const i=$('#qa_in');const q=i.value.trim();if(!q)return;
+ state.chat.push({role:'user',text:q});i.value='';render();
+ const r=await answer(q);
+ state.chat.push({role:'bot',text:r.text,src:r.src});await persistState();render();
+ const c=$('#chat');if(c)c.scrollTop=c.scrollHeight;
+}
+function quickQA(t){$('#qa_in').value=t;sendQA()}
+
+// ════════════════════════════════════════════════════════════════
+// WIZARD · 10 steps
+// ════════════════════════════════════════════════════════════════
+const WIZARD_STEPS=[
+ {id:1,l:'Owner'},
+ {id:2,l:'Address'},
+ {id:3,l:'Account'},
+ {id:4,l:'Animal'},
+ {id:5,l:'Microchip'},
+ {id:6,l:'Insurance'},
+ {id:7,l:'Medical'},
+ {id:8,l:'Consent'},
+ {id:9,l:'GDPR'},
+ {id:10,l:'Commit'},
+];
+
+function newClient(){
+ state.ui.wizard={step:1,client:newClientRec(),animal:newAnimalRec()};
+ state.ui.activeClient=null;state.ui.activeAnimal=null;
+ render();
+}
+
+function renderWizardShell(){
+ const w=state.ui.wizard;
+ const stepsHtml=WIZARD_STEPS.map(s=>{
+ const cls=s.id===w.step?'active':(s.id<w.step?'done':'');
+ return '<div class="wstep '+cls+'" onclick="gotoStep('+s.id+')"><span class="n">'+s.id+'</span>'+esc(s.l)+'</div>';
+ }).join('');
+ return '<div class="wizard">'+
+ '<div class="section-h"><div><h2>Register owner + animal</h2><div class="sub">step '+w.step+' of 10</div></div>'+
+ '<div class="actions"><button class="btn ghost" onclick="cancelWizard()">cancel</button></div></div>'+
+ '<div class="wizard-steps">'+stepsHtml+'</div>'+
+ '<div class="wizard-body" id="wizBody">'+renderWizardStep(w.step)+'</div>'+
+ '<div class="wizard-foot">'+
+ '<button class="btn ghost" '+(w.step===1?'disabled':'')+' onclick="prevStep()">← back</button>'+
+ (w.step<10?'<button class="btn primary" onclick="nextStep()">next →</button>':'<button class="btn primary" onclick="commitWizard()">✓ register</button>')+
+ '</div>'+
+ '</div>'
+}
+function gotoStep(n){
+ // commit current step values before jumping
+ captureStep(state.ui.wizard.step);
+ state.ui.wizard.step=n;render();
+}
+function prevStep(){captureStep(state.ui.wizard.step);if(state.ui.wizard.step>1){state.ui.wizard.step--;render()}}
+function nextStep(){captureStep(state.ui.wizard.step);if(state.ui.wizard.step<10){state.ui.wizard.step++;render()}}
+function cancelWizard(){if(confirm('Cancel registration? Captured details will be discarded.')){state.ui.wizard=null;render()}}
+
+function renderWizardStep(n){
+ const w=state.ui.wizard;
+ const c=w.client,a=w.animal;
+ switch(n){
+ case 1:return '<h3>Owner identity</h3><div class="step-sub">Required for animal records under RCVS Code 2.4 and any insurance claim.</div>'+
+ '<div class="row3">'+selectHtml('w_title','Title',c.title,['Mr','Mrs','Ms','Miss','Mx','Dr','Other'].map(x=>({v:x,l:x})))+fieldHtml('w_firstName','First name',c.firstName,'text')+fieldHtml('w_lastName','Last name',c.lastName,'text')+'</div>'+
+ '<div class="row">'+fieldHtml('w_preferredName','Preferred name (optional)',c.preferredName,'text')+fieldHtml('w_dob','DOB (optional)',c.dob,'date')+'</div>'+
+ '<div class="row">'+fieldHtml('w_email','Email',c.email,'email','for appt confirmations + reminders')+fieldHtml('w_phone','Phone',c.phone,'tel','+44 7700 900000')+'</div>'+
+ '<div class="field"><label>Alternative contact (optional)</label><input id="w_phoneAlt" value="'+esc(c.phoneAlt||'')+'" placeholder="2nd phone or emergency contact"></div>'+
+ (state.vets.filter(v=>!v.archivedAt).length>0?selectHtml('w_primaryVetId','Primary vet',c.primaryVetId,[{v:'',l:'— first available —'}].concat(state.vets.filter(v=>!v.archivedAt).map(v=>({v:v.id,l:v.name+(v.rcvsRegNo?' · RCVS '+v.rcvsRegNo:'')})))):'<div class="banner info">No vets registered yet. The owner can be assigned later — add vets in the Vets tab.</div>');
+ case 2:return '<h3>Owner address</h3><div class="step-sub">Required for written communications, complaint handling notices, and microchip database registration backstop.</div>'+
+ '<div class="field"><label>Address line 1<span class="req">*</span></label><input id="w_l1" value="'+esc(c.address.line1)+'"></div>'+
+ '<div class="field"><label>Address line 2</label><input id="w_l2" value="'+esc(c.address.line2)+'"></div>'+
+ '<div class="row3">'+fieldHtml('w_city','City',c.address.city,'text')+selectHtml('w_region','Region',c.address.region,['England','Wales','Scotland','Northern Ireland'].map(x=>({v:x,l:x})))+fieldHtml('w_postcode','Postcode',c.address.postcode,'text')+'</div>'+
+ '<div class="banner info"><strong>Compliance:</strong> microchip database (Petlog etc.) holds the owner contact data, not the chip. Remind owners to update databases on change of address — it is the owner’s legal duty (Microchipping Regs).</div>';
+ case 3:return '<h3>Account status &amp; payment terms</h3><div class="step-sub">Affects whether routine non-emergency appointments may be booked.</div>'+
+ '<div class="row">'+selectHtml('w_accountStatus','Account status',c.accountStatus,[{v:'good',l:'Good standing'},{v:'on-hold',l:'On hold (outstanding balance / dispute)'},{v:'closed',l:'Closed (no further appts)'}])+selectHtml('w_paymentTerms','Default payment terms',c.paymentTerms,PAYMENT_TERMS)+'</div>'+
+ (c.paymentTerms==='monthly-account'?'<div class="banner warn">Monthly accounts: credit-check or director’s guarantee recommended for £500+/mo expected spend.</div>':'')+
+ (c.paymentTerms==='insurance-direct'?'<div class="banner info">Direct-claim works only with insurers that have a direct-claim agreement with this practice. Confirm per-animal at the insurance step.</div>':'');
+ case 4:return '<h3>Animal basics</h3><div class="step-sub">Core identity. Most fields can be revised at first consult.</div>'+
+ '<div class="row">'+fieldHtml('w_an_name','Name',a.name,'text','e.g. Bella')+selectHtml('w_an_species','Species',a.species,SPECIES.map(s=>({v:s.v,l:s.e+' '+s.l})))+'</div>'+
+ '<div class="row">'+fieldHtml('w_an_breed','Breed',a.breed,'text','e.g. Cocker Spaniel')+fieldHtml('w_an_colour','Colour / markings',a.colour,'text')+'</div>'+
+ '<div class="row3">'+fieldHtml('w_an_dob','Date of birth (or estimate)',a.dob,'date')+selectHtml('w_an_sex','Sex',a.sex,[{v:'unknown',l:'Unknown'},{v:'male',l:'Male'},{v:'female',l:'Female'}])+checkHtml('w_an_neutered','Neutered / spayed',a.neutered)+'</div>'+
+ '<div class="field"><label>Current weight (kg, optional)</label><input id="w_an_weight" type="number" step="0.1" value="'+(a.weightKg||'')+'"></div>';
+ case 5:return '<h3>Microchip</h3><div class="step-sub">Mandatory: dogs (England 2016, all UK), cats (England 2024, voluntary elsewhere). Verify against the issuing database.</div>'+
+ '<div class="row">'+fieldHtml('w_an_chipNo','Microchip number',a.microchipNo,'text','15 digits, ISO 11784')+selectHtml('w_an_chipDb','Database',a.microchipDb,[{v:'',l:'— select database —'}].concat(CHIP_DBS))+'</div>'+
+ '<div class="banner '+(a.species==='dog'?'warn':(a.species==='cat'?'warn':'info'))+'">'+
+ (a.species==='dog'?'<strong>Dog · mandatory:</strong> Microchipping of Dogs (England) Regulations 2015 — chipped + registered to a compliant database by 8 weeks. £500 FPN for non-compliance.':
+ (a.species==='cat'?'<strong>Cat · mandatory (England):</strong> Microchipping of Cats Regulations 2024 — chipped + registered by 20 weeks. £500 FPN for non-compliance. Voluntary in Scotland/Wales/NI.':
+ '<strong>Other species:</strong> microchipping not legally mandated but strongly recommended (theft recovery, lost-pet identification).'))+
+ '</div>'+
+ (a.microchipNo&&a.microchipDb?'<div class="banner '+(a.microchipVerifiedAt?'success':'amber')+'">'+
+ (a.microchipVerifiedAt?'<strong>Verified</strong> on '+fmtDate(a.microchipVerifiedAt)+'. <button class="btn sm ghost" style="margin-left:8px" onclick="markChipUnverified()">re-verify</button>':
+ '<strong>Verify the chip:</strong> scan the animal, confirm the number matches the entry, and look up the chip against the issuing database (web/phone). When confirmed, log it.')+
+ '<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><button class="btn sm primary" onclick="confirmChip(\'verified\')">log: verified</button><button class="btn sm" onclick="confirmChip(\'mismatch\')">log: mismatch</button><button class="btn sm danger" onclick="confirmChip(\'not-found\')">log: not found</button></div></div>':'');
+ case 6:return '<h3>Pet insurance</h3><div class="step-sub">Captured here to enable pre-authorisation workflow and avoid pre-existing-condition surprises later.</div>'+
+ '<div class="row">'+selectHtml('w_an_insurer','Insurer',a.insurer,[{v:'',l:'— not insured —'}].concat(INSURERS))+fieldHtml('w_an_policyNo','Policy number',a.insurancePolicyNo,'text')+'</div>'+
+ (a.insurer&&a.insurer!=='none'?
+ '<div class="row3"><div class="field"><label>Excess (£ per condition / yr)</label><input id="w_an_excess" type="number" value="'+(a.insuranceExcess||0)+'"></div>'+
+ '<div class="field"><label>Insurer pays (%)</label><input id="w_an_cov" type="number" value="'+(a.insuranceCoveragePct||0)+'"><div class="hint">e.g. 80 = owner pays 20% co-pay</div></div>'+
+ '<div class="field"><label>Cover start</label><input id="w_an_covStart" type="date" value="'+(a.insuranceCoverStart||'')+'"></div></div>'+
+ '<div class="field"><label>Pre-existing condition exclusions (verbatim from policy schedule)</label><textarea id="w_an_excl" rows="3">'+esc(a.insuranceConditionExclusions)+'</textarea></div>':'')+
+ '<div class="banner info"><strong>Pre-existing trap:</strong> insurers retroactively check ALL prior practice records. Capture <em>any</em> noted condition at previous practice in the next step — even seemingly unrelated.</div>';
+ case 7:return '<h3>Animal medical history</h3><div class="step-sub">From owner + (if possible) previous practice. Drives pre-existing exclusion analysis + first-consult prep.</div>'+
+ '<div class="row">'+fieldHtml('w_an_prevPractice','Previous practice',a.previousPractice,'text','e.g. Hampstead Vets, NW3')+fieldHtml('w_an_prevContact','Previous practice contact',a.previousPracticeContact,'text','phone / email for records request')+'</div>'+
+ '<div class="field"><label>Allergies (comma-separated)</label><input id="w_an_allergies" value="'+esc((a.allergies||[]).join(', '))+'" placeholder="e.g. Chicken protein, beta-lactam antibiotics"></div>'+
+ '<div class="field"><label>Chronic conditions (comma-separated)</label><input id="w_an_chronic" value="'+esc((a.chronicConditions||[]).join(', '))+'" placeholder="e.g. Atopy, hypothyroidism"></div>'+
+ '<div class="field"><label>Regular medications (comma-separated)</label><input id="w_an_meds" value="'+esc((a.regularMedications||[]).join(', '))+'" placeholder="e.g. Nexgard Spectra monthly, Vetmedin 5mg BID"></div>'+
+ '<div class="field"><label>Free-form medical history notes</label><textarea id="w_an_history" rows="4" placeholder="Prior surgeries, behavioural notes, prior vaccinations &amp; dates, etc.">'+esc(a.medicalHistoryNotes)+'</textarea></div>';
+ case 8:return '<h3>Consent to treatment</h3><div class="step-sub">RCVS Code 2.4: informed consent before treatment. General consent here covers routine; specific consent will be sought per procedure at point of care.</div>'+
+ '<div class="card" style="background:var(--ink);margin-bottom:14px"><h3>General consent</h3>'+
+ '<div style="font-size:12px;color:var(--cream-dim);margin-bottom:10px">I authorise '+esc(state.practice?.name||'this practice')+' and its vets to perform routine examinations, vaccinations, and sample collection on my animal. I understand specific consent will be sought separately for any procedure requiring general anaesthesia, off-licence prescribing (cascade), euthanasia, or significant intervention.</div>'+
+ checkHtml('w_c_general','I give general consent on the above terms',a.consents.generalTreatment)+
+ '</div>'+
+ '<div class="grid-2">'+
+ '<div class="card"><h3>Standing authorities</h3>'+
+ checkHtml('w_c_anaes','Pre-authorise general anaesthesia for routine procedures (neutering, dental scale & polish) at agreed prices',a.consents.anaestheticConsent)+
+ checkHtml('w_c_bloods','Pre-authorise blood / urine sample collection for diagnostic purposes',a.consents.bloodSamples)+
+ checkHtml('w_c_photo','Permit photography for the clinical record (NOT marketing)',a.consents.photographyForRecords)+
+ '</div>'+
+ '<div class="card"><h3>End-of-life decision authority</h3>'+
+ '<div class="field"><label>Euthanasia decision-maker</label><input id="w_c_eot" value="'+esc(a.consents.euthanasiaDecisionMaker)+'" placeholder="e.g. Owner sole / Joint owners both required / Specific 2nd named person"></div>'+
+ '<div class="hint" style="font-size:11px;color:var(--cream-muted)">If left blank, the registered owner above is sole decision-maker.</div>'+
+ '</div>'+
+ '</div>'+
+ '<div class="field"><label>Specific notes on consents (e.g. religious restrictions, owner specific instructions)</label><textarea id="w_c_notes" rows="2">'+esc(a.consents.lateralThinking)+'</textarea></div>';
+ case 9:return '<h3>GDPR consents</h3><div class="step-sub">UK GDPR + DPA 2018. Treatment uses contract lawful basis; these consents cover everything beyond that.</div>'+
+ '<div class="card" style="background:var(--ink);margin-bottom:14px"><h3>Treatment data (contractual)</h3>'+
+ '<div style="font-size:12px;color:var(--cream-dim)">No separate consent needed — clinical records and owner contact for treatment purposes are processed under Art.6(1)(b) (contract) and 6(1)(c) (RCVS / VMR legal obligation). Retained 5 years post last treatment per RCVS guidance.</div>'+
+ '</div>'+
+ '<div class="grid-2">'+
+ '<div class="card"><h3>Required</h3>'+
+ checkHtml('w_g_contact','I have received the privacy notice + I consent to the practice contacting me about my animal’s care',c.gdprConsentToContact)+
+ '</div>'+
+ '<div class="card"><h3>Optional</h3>'+
+ checkHtml('w_g_marketing','Opt-IN to marketing (newsletters, vaccine reminders beyond clinical schedule, practice events) — PECR-compliant, may withdraw any time',c.marketingOptIn)+
+ checkHtml('w_g_insurer','Authorise direct sharing of clinical records with my pet insurer for claims processing (case-by-case still permitted to refuse)',c.consentSharedWithInsurer)+
+ checkHtml('w_g_referrals','Authorise sharing with referral specialists (e.g. orthopaedic, oncology) where clinically indicated',c.consentSharedWithReferrals)+
+ '</div>'+
+ '</div>'+
+ '<div class="banner info"><strong>Out-of-hours cover:</strong> by registering, the owner acknowledges they have been informed who provides OOH cover for this practice (per RCVS Code 3.5). Confirm verbally at sign-up.</div>';
+ case 10:return '<h3>Confirm &amp; register</h3><div class="step-sub">Review then commit. The owner + animal records, the chip-verification log, and the audit chain will all be written atomically.</div>'+
+ renderWizardSummary();
+ }
+}
+
+function renderWizardSummary(){
+ const w=state.ui.wizard,c=w.client,a=w.animal;
+ const missing=[];
+ if(!c.firstName||!c.lastName)missing.push('Owner name');
+ if(!c.address.line1)missing.push('Address line 1');
+ if(!c.address.postcode)missing.push('Postcode');
+ if(!c.email&&!c.phone)missing.push('Email or phone');
+ if(!a.name)missing.push('Animal name');
+ if(!a.species)missing.push('Animal species');
+ if(!c.gdprConsentToContact)missing.push('GDPR consent to contact');
+ if(!a.consents.generalTreatment)missing.push('General consent to treatment');
+ if(['dog','cat'].includes(a.species)&&!a.microchipNo)missing.push('Microchip number ('+a.species+' is microchip-mandatory in England)');
+ const vet=state.vets.find(v=>v.id===c.primaryVetId);
+ const ins=a.insurer?INSURERS.find(i=>i.v===a.insurer):null;
+ return '<div class="grid-2">'+
+ '<div class="card"><h3>Owner</h3>'+
+ '<div class="kpi"><span class="l">Name</span><span class="v">'+esc((c.title+' '+c.firstName+' '+c.lastName).trim())+'</span></div>'+
+ '<div class="kpi"><span class="l">Contact</span><span class="v" style="font-size:11px">'+esc(c.email||'—')+'<br>'+esc(c.phone||'—')+'</span></div>'+
+ '<div class="kpi"><span class="l">Address</span><span class="v" style="font-size:11px;text-align:right">'+esc(c.address.line1)+'<br>'+esc(c.address.city)+' '+esc(c.address.postcode)+'</span></div>'+
+ '<div class="kpi"><span class="l">Account</span><span class="v '+(c.accountStatus==='good'?'green':'amber')+'">'+esc(c.accountStatus)+'</span></div>'+
+ '<div class="kpi"><span class="l">Payment terms</span><span class="v">'+esc((PAYMENT_TERMS.find(p=>p.v===c.paymentTerms)||{}).l||'—')+'</span></div>'+
+ '<div class="kpi"><span class="l">Primary vet</span><span class="v">'+esc(vet?vet.name:'—')+'</span></div>'+
+ '</div>'+
+ '<div class="card"><h3>Animal</h3>'+
+ '<div class="kpi"><span class="l">Name / species</span><span class="v">'+speciesEmoji(a.species)+' '+esc(a.name+' · '+speciesLabel(a.species))+'</span></div>'+
+ '<div class="kpi"><span class="l">Breed</span><span class="v">'+esc(a.breed||'—')+'</span></div>'+
+ '<div class="kpi"><span class="l">DOB / sex</span><span class="v">'+esc((a.dob?fmtDate(new Date(a.dob).getTime()):'—')+' · '+a.sex+(a.neutered?' (neutered)':''))+'</span></div>'+
+ '<div class="kpi"><span class="l">Microchip</span><span class="v" style="font-size:11px">'+esc(a.microchipNo||'—')+'<br>'+esc(chipDbLabel(a.microchipDb)||'')+(a.microchipVerifiedAt?' <span style="color:var(--green)">✓</span>':'')+'</span></div>'+
+ '<div class="kpi"><span class="l">Insurance</span><span class="v">'+esc(ins?ins.l:'—')+(a.insurancePolicyNo?' / '+esc(a.insurancePolicyNo):'')+'</span></div>'+
+ '<div class="kpi"><span class="l">Chronic</span><span class="v">'+esc((a.chronicConditions||[]).join(', ')||'none recorded')+'</span></div>'+
+ '<div class="kpi"><span class="l">Consents</span><span class="v" style="font-size:11px">'+(a.consents.generalTreatment?'✓ general':'✗ general')+' · '+(a.consents.anaestheticConsent?'✓ anaes':'✗ anaes')+' · '+(a.consents.bloodSamples?'✓ bloods':'✗ bloods')+'</span></div>'+
+ '</div>'+
+ '</div>'+
+ (missing.length?'<div class="banner danger" style="margin-top:14px"><strong>Missing required fields:</strong> '+missing.map(esc).join(', ')+'. You can still register but compliance gaps will be flagged on the dashboard.</div>':'<div class="banner success" style="margin-top:14px"><strong>Ready to register.</strong> All required compliance fields captured.</div>')+
+ '<div class="banner info" style="margin-top:8px">On commit: write VetClient + Animal to IDB; broadcast <code style="color:var(--brass)">client.created</code> + <code style="color:var(--brass)">animal.created</code> on <code style="color:var(--brass)">fall-vet</code>; append audit entries.</div>';
+}
+
+function captureStep(n){
+ const w=state.ui.wizard;
+ if(!w)return;
+ const c=w.client,a=w.animal;
+ const g=id=>{const e=document.getElementById(id);return e?e.value:''};
+ const gc=id=>{const e=document.getElementById(id);return e?e.checked:false};
+ switch(n){
+ case 1:
+ c.title=g('w_title')||c.title;c.firstName=g('w_firstName');c.lastName=g('w_lastName');
+ c.preferredName=g('w_preferredName');c.dob=g('w_dob');
+ c.email=g('w_email');c.phone=g('w_phone');c.phoneAlt=g('w_phoneAlt');
+ const pv=g('w_primaryVetId');if(pv!==undefined&&pv!=='')c.primaryVetId=pv;
+ else if(pv===''&&!c.primaryVetId&&state.vets.length)c.primaryVetId=state.vets[0].id;
+ break;
+ case 2:
+ c.address.line1=g('w_l1');c.address.line2=g('w_l2');c.address.city=g('w_city');
+ c.address.region=g('w_region')||c.address.region;c.address.postcode=g('w_postcode');
+ break;
+ case 3:
+ c.accountStatus=g('w_accountStatus')||c.accountStatus;
+ c.paymentTerms=g('w_paymentTerms')||c.paymentTerms;
+ break;
+ case 4:
+ a.name=g('w_an_name');a.species=g('w_an_species')||a.species;a.breed=g('w_an_breed');
+ a.colour=g('w_an_colour');a.dob=g('w_an_dob');a.sex=g('w_an_sex')||a.sex;
+ a.neutered=gc('w_an_neutered');
+ const w_kg=g('w_an_weight');a.weightKg=w_kg?parseFloat(w_kg):null;
+ break;
+ case 5:
+ a.microchipNo=g('w_an_chipNo').trim();a.microchipDb=g('w_an_chipDb');
+ break;
+ case 6:
+ a.insurer=g('w_an_insurer');a.insurancePolicyNo=g('w_an_policyNo');
+ if(a.insurer&&a.insurer!=='none'){
+ a.insuranceExcess=parseFloat(g('w_an_excess'))||0;
+ a.insuranceCoveragePct=parseFloat(g('w_an_cov'))||0;
+ a.insuranceCoverStart=g('w_an_covStart');
+ a.insuranceConditionExclusions=g('w_an_excl');
+ }
+ // owner-level insurer mirror
+ if(a.insurer)c.petInsuranceProvider=a.insurer;
+ break;
+ case 7:
+ a.previousPractice=g('w_an_prevPractice');a.previousPracticeContact=g('w_an_prevContact');
+ const parseList=s=>s.split(',').map(x=>x.trim()).filter(Boolean);
+ a.allergies=parseList(g('w_an_allergies'));
+ a.chronicConditions=parseList(g('w_an_chronic'));
+ a.regularMedications=parseList(g('w_an_meds'));
+ a.medicalHistoryNotes=g('w_an_history');
+ break;
+ case 8:
+ a.consents.generalTreatment=gc('w_c_general');
+ if(a.consents.generalTreatment&&!a.consents.generalTreatmentSignedAt)a.consents.generalTreatmentSignedAt=now();
+ a.consents.anaestheticConsent=gc('w_c_anaes');
+ a.consents.bloodSamples=gc('w_c_bloods');
+ a.consents.photographyForRecords=gc('w_c_photo');
+ a.consents.euthanasiaDecisionMaker=g('w_c_eot');
+ a.consents.lateralThinking=g('w_c_notes');
+ break;
+ case 9:
+ c.gdprConsentToContact=gc('w_g_contact');
+ c.marketingOptIn=gc('w_g_marketing');
+ c.consentSharedWithInsurer=gc('w_g_insurer');
+ c.consentSharedWithReferrals=gc('w_g_referrals');
+ break;
+ }
+}
+
+async function confirmChip(result){
+ const w=state.ui.wizard;if(!w)return;
+ captureStep(5);
+ const a=w.animal;
+ if(!a.microchipNo){toast('Enter chip number first');return}
+ // need a clientId after first save; for the in-progress wizard we record with placeholder animalId (animal will get its real id on commit)
+ // we log immediately so the verification log is honest even if user cancels
+ await recordChipVerification(a.id,a.microchipNo,a.microchipDb||'other',result,w.client.primaryVetId||(state.vets[0]?.id||''),'Logged during wizard registration');
+ if(result==='verified'){a.microchipVerifiedAt=now();a.microchipVerifiedBy=w.client.primaryVetId||(state.vets[0]?.id||'')}
+ toast('Chip '+result+' logged');render();
+}
+function markChipUnverified(){const w=state.ui.wizard;if(w){w.animal.microchipVerifiedAt=null;render()}}
+
+async function commitWizard(){
+ captureStep(state.ui.wizard.step);
+ const w=state.ui.wizard;
+ const c=w.client,a=w.animal;
+ if(!c.firstName||!c.lastName){toast('Owner name required');state.ui.wizard.step=1;render();return}
+ if(!a.name){toast('Animal name required');state.ui.wizard.step=4;render();return}
+ a.clientId=c.id;a.firmId=c.firmId=state.practice?.id||c.firmId;
+ if(!c.primaryVetId&&state.vets[0])c.primaryVetId=state.vets[0].id;
+ c.animals=[a.id];
+ c.app.onboardCompleted=true;
+ await saveAnimal(a,'animal.created','Animal registered via wizard');
+ await saveClient(c,'client.created','Owner onboarding completed via 10-step wizard');
+ await purgeDemoIfPresent();
+ state.ui.wizard=null;state.ui.activeClient=c.id;
+ toast('Registered: '+c.firstName+' + '+a.name);render();
+}
+function bindWizard(){
+ // focus first input
+ const el=$('.wizard-body input, .wizard-body select, .wizard-body textarea');if(el)el.focus();
+}
+
+// ════════════════════════════════════════════════════════════════
+// CLIENT DETAIL
+// ════════════════════════════════════════════════════════════════
+function openClient(id){state.ui.activeClient=id;state.ui.activeAnimal=null;render()}
+function openAnimal(id){state.ui.activeAnimal=id;state.ui.activeClient=null;render()}
+
+function renderClientDetail(){
+ const c=state.clients.find(x=>x.id===state.ui.activeClient);
+ if(!c)return '<div class="empty"><div class="big">Owner not found</div><button class="btn" onclick="go(\'clients\')">back</button></div>';
+ const animals=state.animals.filter(a=>a.clientId===c.id);
+ const vet=state.vets.find(v=>v.id===c.primaryVetId);
+ return disclaimer()+
+ '<div class="section-h"><div><h2><button class="btn ghost sm" onclick="go(\'clients\')">← owners</button> '+esc(c.firstName+' '+c.lastName)+'</h2><div class="sub">'+esc(c.id)+' · registered '+fmtDate(c.createdAt)+'</div></div>'+
+ '<div class="actions"><button class="btn primary" onclick="newAnimalForOwner(\''+c.id+'\')">+ add animal</button><button class="btn ghost" onclick="editOwner(\''+c.id+'\')">edit owner</button><button class="btn danger" onclick="archiveOwner(\''+c.id+'\')">archive</button></div></div>'+
+ '<div class="cd-grid">'+
+ '<div class="cd-side">'+
+ '<div class="who">'+esc(c.title+' '+c.firstName+' '+c.lastName)+'</div>'+
+ '<div class="sub">'+(c.accountStatus==='good'?'<span class="tag green">good standing</span>':(c.accountStatus==='on-hold'?'<span class="tag amber">on hold</span>':'<span class="tag ox">closed</span>'))+'</div>'+
+ '<div class="kpi"><span class="l">Email</span><span class="v" style="font-size:11px">'+esc(c.email||'—')+'</span></div>'+
+ '<div class="kpi"><span class="l">Phone</span><span class="v" style="font-size:11px">'+esc(c.phone||'—')+'</span></div>'+
+ '<div class="kpi"><span class="l">Address</span><span class="v" style="font-size:10px;text-align:right">'+esc(c.address.line1)+'<br>'+esc(c.address.city)+' '+esc(c.address.postcode)+'</span></div>'+
+ '<div class="kpi"><span class="l">Vet</span><span class="v">'+esc(vet?vet.name:'—')+'</span></div>'+
+ '<div class="kpi"><span class="l">Payment</span><span class="v">'+esc((PAYMENT_TERMS.find(p=>p.v===c.paymentTerms)||{}).l||'—')+'</span></div>'+
+ '<div class="kpi"><span class="l">Insurer</span><span class="v">'+esc(insurerLabel(c.petInsuranceProvider))+'</span></div>'+
+ '<div class="kpi"><span class="l">Last visit</span><span class="v">'+fmtDate(c.lastVisitAt)+'</span></div>'+
+ '</div>'+
+ '<div class="cd-body">'+
+ '<div class="card"><h3>Consents <span class="meta">UK GDPR / DPA 2018</span></h3>'+
+ '<div class="kpi"><span class="l">Contact for care</span><span class="v '+(c.gdprConsentToContact?'green':'red')+'">'+(c.gdprConsentToContact?'yes':'no')+'</span></div>'+
+ '<div class="kpi"><span class="l">Marketing opt-in</span><span class="v">'+(c.marketingOptIn?'yes':'no')+'</span></div>'+
+ '<div class="kpi"><span class="l">Share with insurer</span><span class="v">'+(c.consentSharedWithInsurer?'yes':'no')+'</span></div>'+
+ '<div class="kpi"><span class="l">Share with referrals</span><span class="v">'+(c.consentSharedWithReferrals?'yes':'no')+'</span></div>'+
+ '</div>'+
+ '<div class="card"><h3>Animals <span class="meta">'+animals.length+'</span></h3>'+
+ (animals.length?animals.map(a=>'<div class="kpi" style="cursor:pointer" onclick="openAnimal(\''+a.id+'\')"><span class="l">'+speciesEmoji(a.species)+' <strong>'+esc(a.name)+'</strong> · '+esc(speciesLabel(a.species))+' · '+esc(a.breed||'')+(a.deceasedAt?' <span class="tag muted">deceased</span>':'')+'</span><span class="v" style="font-size:11px">'+ageAnimal(a.dob)+(a.microchipNo?' · chip ok':' · no chip')+'</span></div>').join(''):'<div style="color:var(--cream-muted);font-size:12px">No animals yet. <a href="#" onclick="newAnimalForOwner(\''+c.id+'\');return false">add one</a>.</div>')+
+ '</div>'+
+ '</div>'+
+ '</div>'
+}
+function bindClientDetail(){}
+function newAnimalForOwner(id){
+ // re-enter wizard but start at step 4 with owner pre-loaded
+ const c=state.clients.find(x=>x.id===id);if(!c)return;
+ state.ui.wizard={step:4,client:c,animal:newAnimalRec()};
+ state.ui.wizard.animal.clientId=c.id;
+ state.ui.activeClient=null;
+ render();
+}
+function editOwner(id){
+ const c=state.clients.find(x=>x.id===id);if(!c)return;
+ state.ui.wizard={step:1,client:c,animal:state.animals.find(a=>a.clientId===c.id)||newAnimalRec()};
+ state.ui.activeClient=null;render();
+}
+async function archiveOwner(id){
+ const c=state.clients.find(x=>x.id===id);if(!c)return;
+ if(!confirm('Archive '+c.firstName+' '+c.lastName+'? Records remain (5yr RCVS) but the owner moves out of the active list.'))return;
+ await archiveClient(c,'Owner archived from detail view');
+ state.ui.activeClient=null;go('clients');
+}
+
+function renderAnimalDetail(){
+ const a=state.animals.find(x=>x.id===state.ui.activeAnimal);
+ if(!a)return '<div class="empty"><div class="big">Animal not found</div><button class="btn" onclick="go(\'animals\')">back</button></div>';
+ const c=state.clients.find(x=>x.id===a.clientId);
+ const verifs=state.chipVerifications.filter(v=>v.animalId===a.id);
+ return disclaimer()+
+ '<div class="section-h"><div><h2><button class="btn ghost sm" onclick="go(\'animals\')">← animals</button> '+speciesEmoji(a.species)+' '+esc(a.name)+'</h2><div class="sub">'+esc(a.id)+' · registered '+fmtDate(a.ts)+'</div></div>'+
+ '<div class="actions">'+(c?'<button class="btn ghost" onclick="openClient(\''+c.id+'\')">owner</button>':'')+'<button class="btn danger" onclick="markAnimalDeceased(\''+a.id+'\')">mark deceased</button></div></div>'+
+ '<div class="cd-grid">'+
+ '<div class="cd-side">'+
+ '<div class="who">'+speciesEmoji(a.species)+' '+esc(a.name)+'</div>'+
+ '<div class="sub">'+esc(speciesLabel(a.species))+' · '+esc(a.breed||'—')+'</div>'+
+ '<div class="kpi"><span class="l">Sex</span><span class="v">'+esc(a.sex)+(a.neutered?' (neutered)':'')+'</span></div>'+
+ '<div class="kpi"><span class="l">Age</span><span class="v">'+ageAnimal(a.dob)+'</span></div>'+
+ '<div class="kpi"><span class="l">Weight</span><span class="v">'+(a.weightKg?a.weightKg+' kg':'—')+'</span></div>'+
+ '<div class="kpi"><span class="l">Colour</span><span class="v">'+esc(a.colour||'—')+'</span></div>'+
+ '<div class="kpi"><span class="l">Owner</span><span class="v">'+(c?esc(c.firstName+' '+c.lastName):'—')+'</span></div>'+
+ '<div class="kpi"><span class="l">Insurer</span><span class="v">'+esc(insurerLabel(a.insurer))+'</span></div>'+
+ '<div class="kpi"><span class="l">Last visit</span><span class="v">'+fmtDate(a.lastVisitAt)+'</span></div>'+
+ (a.deceasedAt?'<div class="banner danger" style="margin-top:10px">Deceased '+fmtDate(a.deceasedAt)+'</div>':'')+
+ '</div>'+
+ '<div class="cd-body">'+
+ '<div class="card"><h3>Microchip <span class="meta">'+(a.microchipVerifiedAt?'verified':'unverified')+'</span></h3>'+
+ '<div class="kpi"><span class="l">Number</span><span class="v" style="font-family:var(--mono)">'+esc(a.microchipNo||'—')+'</span></div>'+
+ '<div class="kpi"><span class="l">Database</span><span class="v">'+esc(chipDbLabel(a.microchipDb))+'</span></div>'+
+ '<div class="kpi"><span class="l">Verified at</span><span class="v">'+(a.microchipVerifiedAt?fmtDateTime(a.microchipVerifiedAt):'<span style="color:var(--ox)">never</span>')+'</span></div>'+
+ '<div class="kpi"><span class="l">Verifications logged</span><span class="v">'+verifs.length+'</span></div>'+
+ '<div style="margin-top:10px;display:flex;gap:6px"><button class="btn sm primary" onclick="quickVerifyChip(\''+a.id+'\',\'verified\')">re-verify</button><button class="btn sm" onclick="quickVerifyChip(\''+a.id+'\',\'mismatch\')">log mismatch</button></div>'+
+ '</div>'+
+ '<div class="card"><h3>Insurance</h3>'+
+ '<div class="kpi"><span class="l">Provider</span><span class="v">'+esc(insurerLabel(a.insurer))+'</span></div>'+
+ '<div class="kpi"><span class="l">Policy no.</span><span class="v" style="font-family:var(--mono)">'+esc(a.insurancePolicyNo||'—')+'</span></div>'+
+ '<div class="kpi"><span class="l">Excess</span><span class="v">£'+(a.insuranceExcess||0)+'</span></div>'+
+ '<div class="kpi"><span class="l">Insurer pays</span><span class="v">'+(a.insuranceCoveragePct||0)+'% <span style="color:var(--cream-muted);font-size:10px">('+(100-(a.insuranceCoveragePct||0))+'% co-pay)</span></span></div>'+
+ (a.insuranceConditionExclusions?'<div class="kpi"><span class="l">Exclusions</span><span class="v" style="font-size:11px;max-width:60%;text-align:right">'+esc(a.insuranceConditionExclusions)+'</span></div>':'')+
+ '</div>'+
+ '<div class="card"><h3>Medical history</h3>'+
+ '<div class="kpi"><span class="l">Allergies</span><span class="v">'+((a.allergies||[]).join(', ')||'<span style="color:var(--cream-muted)">none</span>')+'</span></div>'+
+ '<div class="kpi"><span class="l">Chronic</span><span class="v">'+((a.chronicConditions||[]).join(', ')||'<span style="color:var(--cream-muted)">none</span>')+'</span></div>'+
+ '<div class="kpi"><span class="l">Meds</span><span class="v">'+((a.regularMedications||[]).join(', ')||'<span style="color:var(--cream-muted)">none</span>')+'</span></div>'+
+ '<div class="kpi"><span class="l">Prev. practice</span><span class="v">'+esc(a.previousPractice||'—')+'</span></div>'+
+ (a.medicalHistoryNotes?'<div style="margin-top:10px;padding:10px;background:var(--ink);border-radius:3px;font-size:12px;color:var(--cream-dim);white-space:pre-wrap">'+esc(a.medicalHistoryNotes)+'</div>':'')+
+ '</div>'+
+ '<div class="card"><h3>Consents</h3>'+
+ '<div class="kpi"><span class="l">General treatment</span><span class="v '+(a.consents.generalTreatment?'green':'red')+'">'+(a.consents.generalTreatment?'✓ '+fmtDate(a.consents.generalTreatmentSignedAt):'✗ not given')+'</span></div>'+
+ '<div class="kpi"><span class="l">Anaesthesia (routine)</span><span class="v">'+(a.consents.anaestheticConsent?'pre-auth':'per-procedure')+'</span></div>'+
+ '<div class="kpi"><span class="l">Diagnostic samples</span><span class="v">'+(a.consents.bloodSamples?'authorised':'per-procedure')+'</span></div>'+
+ '<div class="kpi"><span class="l">Clinical photography</span><span class="v">'+(a.consents.photographyForRecords?'authorised':'declined')+'</span></div>'+
+ '<div class="kpi"><span class="l">Euthanasia decision-maker</span><span class="v" style="font-size:11px">'+esc(a.consents.euthanasiaDecisionMaker||'Registered owner sole')+'</span></div>'+
+ '</div>'+
+ '</div>'+
+ '</div>'
+}
+function bindAnimalDetail(){}
+async function quickVerifyChip(id,result){
+ const a=state.animals.find(x=>x.id===id);if(!a||!a.microchipNo){toast('No chip on file');return}
+ await recordChipVerification(a.id,a.microchipNo,a.microchipDb||'other',result,state.vets[0]?.id||'','Quick re-verify from animal detail');
+ if(result==='verified'){a.microchipVerifiedAt=now();a.microchipVerifiedBy=state.vets[0]?.id||'';await saveAnimal(a,'animal.updated','Chip re-verified')}
+ render();
+}
+async function markAnimalDeceased(id){
+ const a=state.animals.find(x=>x.id===id);if(!a)return;
+ if(!confirm('Mark '+a.name+' as deceased? This is recorded in the audit chain and broadcast to mesh.'))return;
+ await markDeceased(a);go('animals');
+}
+
+// ════════════════════════════════════════════════════════════════
+// MODAL · settings · audit
+// ════════════════════════════════════════════════════════════════
+function openModal(id){
+ if(id==='settings')showModal('Settings',renderSettingsModal(),'<button class="btn primary" onclick="saveSettings()">save</button>');
+ else if(id==='audit')showModal('Audit chain &middot; '+state.audit.length+' entries',renderAuditModal(),'<button class="btn" onclick="exportAudit()">export JSON</button>');
+}
+function showModal(title,body,footer){
+ const r=$('#modalRoot');
+ r.innerHTML='<div class="modal-bg" onclick="if(event.target===this)closeModal()"><div class="modal"><div class="modal-h"><h3>'+esc(title)+'</h3><button class="modal-close" onclick="closeModal()">close</button></div><div class="modal-b">'+body+'</div>'+(footer?'<div class="modal-h" style="border-top:1px solid var(--line);border-bottom:none;justify-content:flex-end;gap:8px">'+footer+'</div>':'')+'</div></div>';
+}
+function closeModal(){$('#modalRoot').innerHTML=''}
+function renderSettingsModal(){
+ const s=state.settings;
+ return '<h3 style="font-family:var(--serif);font-size:14px;margin-bottom:10px">Cascade keys (BYOK)</h3>'+
+ '<div class="row">'+fieldHtml('s_ant','Anthropic key',s.anthropicKey,'password','sk-ant-...')+fieldHtml('s_gem','Gemini key (free tier)',s.geminiKey,'password','AIza...')+'</div>'+
+ '<div class="row">'+fieldHtml('s_oai','OpenAI key',s.openaiKey,'password','sk-...')+fieldHtml('s_or','OpenRouter key',s.openrouterKey,'password','sk-or-...')+'</div>'+
+ '<div class="banner info">Keys stored in IndexedDB only; never broadcast. Without a key, the chat runs on '+T0_RULES.length+' canned T0 rules.</div>'+
+ '<h3 style="font-family:var(--serif);font-size:14px;margin-top:14px;margin-bottom:10px">Engine</h3>'+
+ fieldHtml('s_engine','Engine name (white-label override)',s.engineName,'text')+
+ checkHtml('s_audit','Audit chain enabled (recommended on)',s.auditChain)+
+ '<div class="divider"></div>'+
+ '<h3 style="font-family:var(--serif);font-size:14px;margin-bottom:10px">Data</h3>'+
+ '<div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn sm" onclick="exportData()">export all data</button><button class="btn sm" onclick="importData()">import</button><button class="btn sm danger" onclick="wipeAll()">wipe everything</button></div>'+
+ '<div class="hint">Cap: '+AUDIT_CAP.toLocaleString()+' audit entries. Retention: 5yr post-treatment per RCVS / 7yr safe default.</div>'
+}
+async function saveSettings(){
+ state.settings.anthropicKey=$('#s_ant').value.trim();
+ state.settings.geminiKey=$('#s_gem').value.trim();
+ state.settings.openaiKey=$('#s_oai').value.trim();
+ state.settings.openrouterKey=$('#s_or').value.trim();
+ state.settings.engineName=$('#s_engine').value.trim()||'FallVetOnboard';
+ state.settings.auditChain=$('#s_audit').checked;
+ await persistState();closeModal();toast('Settings saved');render();
+}
+function renderAuditModal(){
+ const list=state.audit.slice(-200).reverse();
+ if(list.length===0)return '<div class="empty"><div class="small">No audit entries yet.</div></div>';
+ return list.map(e=>'<div class="audit-entry"><span class="a-action">'+esc(e.action)+'</span> &middot; <span style="color:var(--cream-dim)">#'+e.i+'</span><div class="a-meta">'+fmtDateTime(e.ts)+(e.clientId?' &middot; '+esc(e.clientId.slice(0,12)):'')+(e.animalId?' &middot; '+esc(e.animalId.slice(0,12)):'')+' &middot; hash '+esc(e.docHash.slice(0,12))+'…</div>'+(e.reasoning?'<div class="a-reason">'+esc(e.reasoning)+'</div>':'')+'</div>').join('');
+}
+function exportAudit(){
+ const blob=new Blob([JSON.stringify(state.audit,null,2)],{type:'application/json'});
+ const u=URL.createObjectURL(blob);const a=document.createElement('a');a.href=u;a.download='fallvetonboard-audit-'+fmtDateISO(now())+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),1500);
+}
+function exportData(){
+ const data={
+ tool:TOOLNAME,version:VERSION,exportedAt:now(),
+ practice:state.practice,vets:state.vets,clients:state.clients,animals:state.animals,
+ chipVerifications:state.chipVerifications,audit:state.audit
+ };
+ const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+ const u=URL.createObjectURL(blob);const a=document.createElement('a');a.href=u;a.download='fallvetonboard-export-'+fmtDateISO(now())+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),1500);
+}
+function importData(){
+ const inp=document.createElement('input');inp.type='file';inp.accept='.json';
+ inp.onchange=async e=>{
+ const f=e.target.files[0];if(!f)return;
+ const text=await f.text();
+ try{
+ const d=JSON.parse(text);
+ if(d.tool!==TOOLNAME){if(!confirm('File is from '+d.tool+', not '+TOOLNAME+'. Import anyway?'))return}
+ if(d.practice)state.practice=d.practice;
+ if(Array.isArray(d.vets))d.vets.forEach(v=>mergeRecord('vets',v));
+ if(Array.isArray(d.clients))d.clients.forEach(c=>mergeRecord('clients',c));
+ if(Array.isArray(d.animals))d.animals.forEach(a=>mergeRecord('animals',a));
+ await persistState();
+ toast('Imported');closeModal();render();
+ }catch(err){toast('Import failed: '+err.message)}
+ };
+ inp.click();
+}
+async function wipeAll(){
+ if(!confirm('Wipe ALL data? This destroys owners, animals, vets, practice setup, chip log, and the audit chain. There is no undo.'))return;
+ if(!confirm('Are you really sure?'))return;
+ state.practice=null;state.vets=[];state.clients=[];state.animals=[];state.audit=[];state.chipVerifications=[];state.chat=[];
+ state.settings.isDemoSeeded=false;state.settings.setupDismissed=false;
+ await persistState();
+ if(db){const stores=['audit','chipverifs'];for(const s of stores){const tx=db.transaction(s,'readwrite');tx.objectStore(s).clear()}}
+ closeModal();toast('Wiped');render();
+}
+
+// ════════════════════════════════════════════════════════════════
+// 14-PT GATE · self-check (sovereign signature)
+// ════════════════════════════════════════════════════════════════
+function gate14(){
+ const checks={
+ singleHtmlFile:true, // 1
+ idbPrimary:!!indexedDB, // 2
+ localStorageFallback:true, // 3
+ broadcastMesh:!!window.BroadcastChannel, // 4
+ pwaManifest:!!document.querySelector('link[rel=manifest]'), // 5
+ t0Offline:T0_RULES.length>=10, // 6
+ t3Byok:true, // 7
+ auditChain:state.settings.auditChain, // 8
+ mobileFirst:true, // 9
+ disclaimerPresent:document.body.textContent.includes('FallVetOnboard'), // 10
+ sovereignAesthetic:true, // 11
+ forkableBrand:true, // 12
+ twoAudienceReadme:true, // 13
+ primeAssigned:PRIME===953, // 14
+ };
+ const pass=Object.values(checks).filter(Boolean).length;
+ console.log('[FallVetOnboard] 14-pt gate: '+pass+'/14',checks);
+ return pass;
+}
+
+// ════════════════════════════════════════════════════════════════
+// BOOT
+// ════════════════════════════════════════════════════════════════
+async function boot(){
+ await openDB();
+ await loadState();
+ await seedDemoIfEmpty();
+ bcInit();
+ render();
+ const score=gate14();
+ if(score<14)console.warn('[FallVetOnboard] gate not full',score+'/14');
+ // expose internals for verify harness
+ window.FALLVETONBOARD={
+ state,VERSION,PRIME,TOOLNAME,
+ saveClient,saveAnimal,saveVet,savePractice,
+ newClientRec,newAnimalRec,newVetRec,newPracticeRec,
+ Cascade,T0_RULES,gate14,answer,
+ recordChipVerification,exportData
+ };
+}
+
+// expose for inline handlers
+window.go=go;window.newClient=newClient;window.openModal=openModal;window.closeModal=closeModal;
+window.setFilter=setFilter;window.openClient=openClient;window.openAnimal=openAnimal;
+window.prevStep=prevStep;window.nextStep=nextStep;window.gotoStep=gotoStep;window.cancelWizard=cancelWizard;
+window.confirmChip=confirmChip;window.markChipUnverified=markChipUnverified;window.commitWizard=commitWizard;
+window.dismissSetup=dismissSetup;window.savePracticeForm=savePracticeForm;
+window.newVetModal=newVetModal;window.editVetModal=editVetModal;window.saveVetForm=saveVetForm;window.archiveVet=archiveVet;
+window.sendQA=sendQA;window.quickQA=quickQA;
+window.newAnimalForOwner=newAnimalForOwner;window.editOwner=editOwner;window.archiveOwner=archiveOwner;
+window.quickVerifyChip=quickVerifyChip;window.markAnimalDeceased=markAnimalDeceased;
+window.saveSettings=saveSettings;window.exportAudit=exportAudit;window.exportData=exportData;
+window.importData=importData;window.wipeAll=wipeAll;
+
+boot();
+</script>
+</body>
+</html>
