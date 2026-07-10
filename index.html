@@ -245,22 +245,19 @@ input[type=radio]{width:auto;margin-right:6px;accent-color:var(--brass)}
     'llama-3b':  { id: 'Llama-3.2-3B-Instruct-q4f16_1-MLC',   size: '~2GB',   label: '3B · balanced · default · most laptops' },
     'qwen-7b':   { id: 'Qwen2.5-7B-Instruct-q4f16_1-MLC',     size: '~5GB',   label: '7B · capable · needs decent GPU (M-series Mac / 8GB+ VRAM)' },
     'llama-8b':  { id: 'Llama-3.1-8B-Instruct-q4f16_1-MLC',   size: '~5GB',   label: '8B · common · needs decent GPU' },
-    'llama-70b': { id: 'Llama-3.1-70B-Instruct-q4f16_1-MLC',  size: '~40GB',  label: '70B · frontier · needs serious GPU + 64GB+ RAM' },
-  };
+    'llama-70b': { id: 'Llama-3.1-70B-Instruct-q4f16_1-MLC',  size: '~40GB',  label: '70B · frontier · needs serious GPU + 64GB+ RAM' }};
   const DEFAULT_MODEL = 'llama-3b';
 
   const T3_PROVIDERS = {
     anthropic: { label: 'Anthropic Claude', models: ['claude-sonnet-4-5','claude-opus-4-7','claude-haiku-4-5'], default: 'claude-sonnet-4-5', url: 'https://api.anthropic.com/v1/messages' },
     openai:    { label: 'OpenAI',           models: ['gpt-4o','gpt-4o-mini','o1-mini'],                          default: 'gpt-4o-mini',      url: 'https://api.openai.com/v1/chat/completions' },
-    google:    { label: 'Google Gemini',    models: ['gemini-1.5-pro','gemini-1.5-flash','gemini-2.0-flash-exp'], default: 'gemini-1.5-flash', url: 'https://generativelanguage.googleapis.com/v1beta/models/' },
-  };
+    google:    { label: 'Google Gemini',    models: ['gemini-1.5-pro','gemini-1.5-flash','gemini-2.0-flash-exp'], default: 'gemini-1.5-flash', url: 'https://generativelanguage.googleapis.com/v1beta/models/' }};
 
   // ─── State ───────────────────────────────────────────────────────
   const STATE = {
     config: loadConfig(),
     ai: { ready: false, loading: false, progress: 0, engine: null, model: null },
-    mesh: { active: false, peers: new Map(), bc: null, signal: null },
-  };
+    mesh: { active: false, peers: new Map(), bc: null, signal: null }};
 
   function loadConfig() {
     try { return JSON.parse(localStorage.getItem('fall-kit.config') || '{}'); }
@@ -327,8 +324,7 @@ input[type=radio]{width:auto;margin-right:6px;accent-color:var(--brass)}
     if (tier === 'T2' && STATE.ai.ready && STATE.ai.engine) {
       const r = await STATE.ai.engine.chat.completions.create({
         messages: [{ role: 'system', content: systemPrompt }, { role: 'user', content: userMsg }],
-        max_tokens: maxTokens,
-      });
+        max_tokens: maxTokens});
       return r.choices[0].message.content;
     }
     if (tier === 'T3' && STATE.config.api_key && STATE.config.api_provider) {
@@ -345,8 +341,7 @@ input[type=radio]{width:auto;margin-right:6px;accent-color:var(--brass)}
       const r = await fetch(T3_PROVIDERS.anthropic.url, {
         method: 'POST',
         headers: { 'content-type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01' },
-        body: JSON.stringify({ model, max_tokens: maxTokens, system: sys, messages: [{ role: 'user', content: msg }] }),
-      });
+        body: JSON.stringify({ model, max_tokens: maxTokens, system: sys, messages: [{ role: 'user', content: msg }] })});
       if (!r.ok) throw new Error('Anthropic ' + r.status + ': ' + (await r.text()).slice(0, 200));
       const j = await r.json();
       return j.content[0].text;
@@ -355,8 +350,7 @@ input[type=radio]{width:auto;margin-right:6px;accent-color:var(--brass)}
       const r = await fetch(T3_PROVIDERS.openai.url, {
         method: 'POST',
         headers: { 'content-type': 'application/json', 'Authorization': 'Bearer ' + key },
-        body: JSON.stringify({ model, max_tokens: maxTokens, messages: [{ role: 'system', content: sys }, { role: 'user', content: msg }] }),
-      });
+        body: JSON.stringify({ model, max_tokens: maxTokens, messages: [{ role: 'system', content: sys }, { role: 'user', content: msg }] })});
       if (!r.ok) throw new Error('OpenAI ' + r.status);
       const j = await r.json();
       return j.choices[0].message.content;
@@ -365,8 +359,7 @@ input[type=radio]{width:auto;margin-right:6px;accent-color:var(--brass)}
       const r = await fetch(T3_PROVIDERS.google.url + model + ':generateContent?key=' + encodeURIComponent(key), {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: sys + '\n\n---\n\n' + msg }] }], generationConfig: { maxOutputTokens: maxTokens } }),
-      });
+        body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: sys + '\n\n---\n\n' + msg }] }], generationConfig: { maxOutputTokens: maxTokens } })});
       if (!r.ok) throw new Error('Google ' + r.status);
       const j = await r.json();
       return j.candidates[0].content.parts[0].text;
@@ -607,8 +600,7 @@ input[type=radio]{width:auto;margin-right:6px;accent-color:var(--brass)}
     openMint: openMint,  // v1.2 · launch kcc-mint with this seed prefilled as parent
     MODELS: WEBLLM_MODELS,
     PROVIDERS: T3_PROVIDERS,
-    state: STATE,
-  };
+    state: STATE};
 })(typeof window !== 'undefined' ? window : globalThis);
 
 </script>
@@ -664,8 +656,7 @@ const TABS=[
  {id:'practice',label:'Practice'},
  {id:'vets',label:'Vets'},
  {id:'chiplog',label:'Chip Log'},
- {id:'qa',label:'Vet Help'},
-];
+ {id:'qa',label:'Vet Help'}];
 
 const SPECIES=[
  {v:'dog',l:'Dog',e:'🐕'},
@@ -677,8 +668,7 @@ const SPECIES=[
  {v:'ferret',l:'Ferret',e:'🦝'},
  {v:'bird',l:'Bird (parrot/budgie/etc.)',e:'🐦'},
  {v:'reptile',l:'Reptile',e:'🦎'},
- {v:'exotic',l:'Other / exotic',e:'🐾'},
-];
+ {v:'exotic',l:'Other / exotic',e:'🐾'}];
 
 const CHIP_DBS=[
  {v:'petlog',l:'Petlog (Kennel Club)'},
@@ -690,8 +680,7 @@ const CHIP_DBS=[
  {v:'national-vet-data',l:'National Vet Data Service'},
  {v:'pet-id',l:'Pet ID'},
  {v:'smarttrac',l:'SmartTrac'},
- {v:'other',l:'Other / international'},
-];
+ {v:'other',l:'Other / international'}];
 
 const INSURERS=[
  {v:'petplan',l:'Petplan'},
@@ -707,22 +696,19 @@ const INSURERS=[
  {v:'kennel-club',l:'Kennel Club Insurance'},
  {v:'co-op',l:'Co-op Insurance'},
  {v:'none',l:'No insurance / self-fund'},
- {v:'other',l:'Other'},
-];
+ {v:'other',l:'Other'}];
 
 const PAYMENT_TERMS=[
  {v:'pay-at-visit',l:'Pay at visit'},
  {v:'monthly-account',l:'Monthly account (30 days)'},
  {v:'insurance-direct',l:'Insurance direct-claim (where eligible)'},
- {v:'health-plan',l:'Practice Health Plan (monthly DD)'},
-];
+ {v:'health-plan',l:'Practice Health Plan (monthly DD)'}];
 
 const PSS_LEVELS=[
  {v:'core',l:'Core Standards'},
  {v:'general-practice',l:'General Practice'},
  {v:'veterinary-hospital',l:'Veterinary Hospital'},
- {v:'none',l:'Not currently PSS accredited'},
-];
+ {v:'none',l:'Not currently PSS accredited'}];
 
 // ════════════════════════════════════════════════════════════════
 // STATE
@@ -742,15 +728,13 @@ let state={
  anthropicKey:'',openaiKey:'',geminiKey:'',openrouterKey:'',
  auditChain:true,
  isDemoSeeded:false,
- setupDismissed:false,
- },
+ setupDismissed:false},
  ui:{
  filter:{species:'',account:'',insurance:'',vetId:''},
  animalFilter:{species:'',vaccines:'',chronic:''},
  wizard:null,
  activeClient:null,
- activeAnimal:null,
- }
+ activeAnimal:null}
 };
 
 // ════════════════════════════════════════════════════════════════
@@ -809,8 +793,7 @@ async function persistState(){
  clients:state.clients,
  animals:state.animals,
  chat:state.chat,
- settings:state.settings,
- };
+ settings:state.settings};
  try{localStorage.setItem(STORE+'.state',JSON.stringify(snap))}catch(e){}
  return idbPut('state',snap,'main');
 }
@@ -1189,7 +1172,7 @@ const T0_RULES=[
 
 - Applies to **cats over 20 weeks old** kept as pets
 - Owner must have cat chipped and registered to a compliant database before 20 weeks
-- £500 fixed-penalty for non-compliance (21 days to comply after notice)
+- TBA fixed-penalty for non-compliance (21 days to comply after notice)
 - **Exemptions:** vet certifies chipping would compromise health (rare); free-living cats (feral colony cats not "kept")
 
 **Scotland, Wales, Northern Ireland:** voluntary at time of writing (2026-06). Check current devolved status before advising.
@@ -1203,7 +1186,7 @@ const T0_RULES=[
 
 - All dogs over **8 weeks** must be microchipped and registered to a compliant database
 - Welsh equivalent regs 2015; Scotland 2016; Northern Ireland already had similar (2012)
-- £500 fixed-penalty notice for non-compliance (21 days)
+- TBA fixed-penalty notice for non-compliance (21 days)
 - Breeders must chip puppies before sale and register to themselves; on sale, transfer to new owner
 
 **Compliant databases (UK):** Petlog, MicrochipID, Identibase, Animaltrac, Pet-Scanner, Protected Pet, National Vet Data Service, Pet ID, SmartTrac.
@@ -1212,18 +1195,18 @@ const T0_RULES=[
 
 **On change of owner:** new keeper has 21 days to update. Vet's role is to remind, not to update on the owner's behalf (you don't own the data).`},
  {match:/insurance.*excess|excess.*co-?pay|co-?pay.*insurance|pet insurance excess/i,title:'Pet insurance excess vs co-pay',answer:()=>`**Excess** = the fixed amount the owner pays per claim/condition before insurance contributes.
-- "£99 excess per condition per policy year" — the most common UK structure
-- "£250 excess per claim" — less common, can stack badly on multi-condition treatment
+- "TBA excess per condition per policy year" — the most common UK structure
+- "TBA excess per claim" — less common, can stack badly on multi-condition treatment
 
 **Co-payment** = the *percentage* the owner pays of the remaining bill after the excess.
 - Often introduced when the pet reaches 8-10 years old (Petplan: 20% co-pay from age 8)
-- A claim for £1,000 with £99 excess + 20% co-pay: insurer pays (1000-99) * 0.8 = £720.80, owner pays £279.20
+- A claim for TBA with TBA excess + 20% co-pay: insurer pays (1000-99) * 0.8 = TBA, owner pays TBA
 
 **Capture both** at registration:
 - \`insuranceExcess\` (£)
 - \`insuranceCoveragePct\` (the % insurer covers, e.g. 80 means 20% co-pay)
 
-**Pre-authorisation:** for surgeries above ~£500 most insurers want pre-auth (24-48hrs typical). Always confirm before scheduling a planned procedure. Emergency treatment proceeds without pre-auth.
+**Pre-authorisation:** for surgeries above ~TBA most insurers want pre-auth (24-48hrs typical). Always confirm before scheduling a planned procedure. Emergency treatment proceeds without pre-auth.
 
 **Direct claim eligibility:** depends on insurer + practice agreement. Petplan, ManyPets, Agria, Animal Friends most commonly direct-claim. Direct Line, Tesco usually require owner to pay then claim back.`},
  {match:/rcvs.*consent|informed consent|consent.*treatment|consent guidance/i,title:'RCVS informed consent guidance',answer:()=>`**RCVS Code of Professional Conduct §2.4** — informed consent is required before treatment.
@@ -1288,9 +1271,9 @@ const T0_RULES=[
  {match:/insurance.*pre-?auth|pre-?auth.*insurance|pre-?approval.*treatment/i,title:'Insurance pre-authorisation — typical workflow',answer:()=>`**Pre-authorisation** (a.k.a. pre-approval) — insurer confirms in writing that a planned, non-emergency procedure is likely covered before it is performed.
 
 **When required (typical thresholds):**
-- Petplan: £500+ planned procedure
-- ManyPets: £750+ or any new chronic condition
-- Direct Line: £500+
+- Petplan: TBA+ planned procedure
+- ManyPets: TBA+ or any new chronic condition
+- Direct Line: TBA+
 - Agria: complex referrals always
 
 **What insurer wants:**
@@ -1385,8 +1368,7 @@ const T0_RULES=[
 - Hand the leaflet / point to web URL during sign-up
 - Audit chain entry on every complaint received — the RCVS will ask if they investigate
 
-**Statute of limitations on negligence claim:** 6 years from the date of negligence (Limitations Act 1980 §2) — or 3 years from date of knowledge for latent injury. Keep records accordingly (5yr clinical RCVS + a buffer = 7yr safe default).`},
-];
+**Statute of limitations on negligence claim:** 6 years from the date of negligence (Limitations Act 1980 §2) — or 3 years from date of knowledge for latent injury. Keep records accordingly (5yr clinical RCVS + a buffer = 7yr safe default).`}];
 
 async function answer(q){
  for(const r of T0_RULES){if(r.match.test(q))return{src:'T0 · '+r.title,text:r.answer()}}
@@ -1475,8 +1457,7 @@ function renderClients(){
  {k:'account',v:'',l:'all accounts'},
  {k:'account',v:'good',l:'good standing'},
  {k:'account',v:'on-hold',l:'on hold'},
- {k:'account',v:'closed',l:'closed'},
- ],f.account,'account')+
+ {k:'account',v:'closed',l:'closed'}],f.account,'account')+
  chipRow([{k:'insurance',v:'',l:'any insurer'}].concat(INSURERS.filter(i=>i.v!=='other').slice(0,6).map(i=>({k:'insurance',v:i.v,l:i.l}))),f.insurance,'insurance')+
  (state.vets.length>1?chipRow([{k:'vetId',v:'',l:'all vets'}].concat(state.vets.filter(v=>!v.archivedAt).map(v=>({k:'vetId',v:v.id,l:(v.name||'unnamed').slice(0,20)}))),f.vetId,'vetId'):'')+
  (empty?renderEmptyClients():renderClientsTable(list))
@@ -1749,8 +1730,7 @@ const WIZARD_STEPS=[
  {id:7,l:'Medical'},
  {id:8,l:'Consent'},
  {id:9,l:'GDPR'},
- {id:10,l:'Commit'},
-];
+ {id:10,l:'Commit'}];
 
 function newClient(){
  state.ui.wizard={step:1,client:newClientRec(),animal:newAnimalRec()};
@@ -1801,7 +1781,7 @@ function renderWizardStep(n){
  '<div class="banner info"><strong>Compliance:</strong> microchip database (Petlog etc.) holds the owner contact data, not the chip. Remind owners to update databases on change of address — it is the owner’s legal duty (Microchipping Regs).</div>';
  case 3:return '<h3>Account status &amp; payment terms</h3><div class="step-sub">Affects whether routine non-emergency appointments may be booked.</div>'+
  '<div class="row">'+selectHtml('w_accountStatus','Account status',c.accountStatus,[{v:'good',l:'Good standing'},{v:'on-hold',l:'On hold (outstanding balance / dispute)'},{v:'closed',l:'Closed (no further appts)'}])+selectHtml('w_paymentTerms','Default payment terms',c.paymentTerms,PAYMENT_TERMS)+'</div>'+
- (c.paymentTerms==='monthly-account'?'<div class="banner warn">Monthly accounts: credit-check or director’s guarantee recommended for £500+/mo expected spend.</div>':'')+
+ (c.paymentTerms==='monthly-account'?'<div class="banner warn">Monthly accounts: credit-check or director’s guarantee recommended for TBA+/mo expected spend.</div>':'')+
  (c.paymentTerms==='insurance-direct'?'<div class="banner info">Direct-claim works only with insurers that have a direct-claim agreement with this practice. Confirm per-animal at the insurance step.</div>':'');
  case 4:return '<h3>Animal basics</h3><div class="step-sub">Core identity. Most fields can be revised at first consult.</div>'+
  '<div class="row">'+fieldHtml('w_an_name','Name',a.name,'text','e.g. Bella')+selectHtml('w_an_species','Species',a.species,SPECIES.map(s=>({v:s.v,l:s.e+' '+s.l})))+'</div>'+
@@ -1811,8 +1791,8 @@ function renderWizardStep(n){
  case 5:return '<h3>Microchip</h3><div class="step-sub">Mandatory: dogs (England 2016, all UK), cats (England 2024, voluntary elsewhere). Verify against the issuing database.</div>'+
  '<div class="row">'+fieldHtml('w_an_chipNo','Microchip number',a.microchipNo,'text','15 digits, ISO 11784')+selectHtml('w_an_chipDb','Database',a.microchipDb,[{v:'',l:'— select database —'}].concat(CHIP_DBS))+'</div>'+
  '<div class="banner '+(a.species==='dog'?'warn':(a.species==='cat'?'warn':'info'))+'">'+
- (a.species==='dog'?'<strong>Dog · mandatory:</strong> Microchipping of Dogs (England) Regulations 2015 — chipped + registered to a compliant database by 8 weeks. £500 FPN for non-compliance.':
- (a.species==='cat'?'<strong>Cat · mandatory (England):</strong> Microchipping of Cats Regulations 2024 — chipped + registered by 20 weeks. £500 FPN for non-compliance. Voluntary in Scotland/Wales/NI.':
+ (a.species==='dog'?'<strong>Dog · mandatory:</strong> Microchipping of Dogs (England) Regulations 2015 — chipped + registered to a compliant database by 8 weeks. TBA FPN for non-compliance.':
+ (a.species==='cat'?'<strong>Cat · mandatory (England):</strong> Microchipping of Cats Regulations 2024 — chipped + registered by 20 weeks. TBA FPN for non-compliance. Voluntary in Scotland/Wales/NI.':
  '<strong>Other species:</strong> microchipping not legally mandated but strongly recommended (theft recovery, lost-pet identification).'))+
  '</div>'+
  (a.microchipNo&&a.microchipDb?'<div class="banner '+(a.microchipVerifiedAt?'success':'amber')+'">'+
